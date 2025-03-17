@@ -1,0 +1,78 @@
+/* app/page.module.css */
+.spaceButton {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    padding: 20px 30px;
+    background: linear-gradient(
+      145deg,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(5, 1, 10, 0.8) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 4px 12px rgba(151, 65, 252, 0.2),
+      inset 0 4px 4px rgba(255, 255, 255, 0.1),
+      inset 0 -4px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    overflow: hidden;
+  }
+  
+  .spaceButton:hover {
+    transform: translate(-50%, -55%) scale(1.05);
+    box-shadow: 
+      0 12px 48px rgba(65, 115, 252, 0.3),
+      0 8px 24px rgba(93, 65, 252, 0.2),
+      inset 0 4px 8px rgba(255, 255, 255, 0.2);
+    background: linear-gradient(
+      145deg,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.9) 100%
+    );
+  }
+  
+  .spaceButton:active {
+    transform: translate(-50%, -52%) scale(0.98);
+    box-shadow: 
+      0 4px 16px rgba(151, 65, 252, 0.2),
+      inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .buttonText {
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+  }
+  
+  .buttonText:hover {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  }
+  
+  .buttonGlow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(151, 65, 252, 0.1) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }

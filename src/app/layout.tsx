@@ -1,6 +1,11 @@
+
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+// import { useState, useEffect } from "react";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,17 +22,32 @@ export const metadata: Metadata = {
   description: "A AI chatbot that can help you with your mental health",
 };
 
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  // const [mounted, setMounted] = useState(false);
+
+  // useEffect(() => {
+  //   setMounted(true);
+  // }, []);
+
   return (
-    <html lang="en">
+    <html lang="en" className="dark"
+      style={{ colorScheme: "dark" }}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased  `}
       >
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+
+          {children}
+          <Toaster />
+        </ThemeProvider>
+        {/* <ThemeProvider /> */}
       </body>
     </html>
   );

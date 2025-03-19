@@ -22,13 +22,13 @@ export default function Home() {
       <div className="relative z-10 text-left w-full flex flex-col items-start px-4 sm:px-12">
         {/* Buttons */}
         <div className="mt-40 sm:ms-5 sm:mt-30 flex flex-col sm:flex-row justify-start gap-4 w-full">
-          <Link href="/Explore">
+          <Link href="/login">
             <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-sm font-medium shadow-md w-full sm:w-auto">
               Start Your Healing Journey →
             </Button>
           </Link>
-          <Link href="/Explore">
-            <Button className="bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg text-sm font-medium shadow-md w-full sm:w-auto">
+          <Link href="/about">
+            <Button className="bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg text-sm font-medium shadow-md w-full sm:w-auto" >
               Learn More →
             </Button>
           </Link>

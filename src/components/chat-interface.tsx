@@ -145,7 +145,7 @@ export default function ChatInterface() {
         </div>
       </div>
 
-      <div className="border-t border-gray-800 p-4 absolute bottom-0 left-0 w-full bg-black z-10 ">
+      <div className="border-t border-gray-800 p-4 absolute bottom-0 left-0 w-full  z-10 ">
         <div className="relative flex items-center z-10">
           <textarea
             value={inputValue}

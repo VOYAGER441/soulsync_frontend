@@ -2,13 +2,16 @@
 import axios from "axios";
 import * as Interface from "@/interface/soul.interface";
 
-const SOULSYNC_BASE_URL = "http://localhost:5001/soul";
+// const SOULSYNC_BASE_URL = "http://localhost:5001/soul";
 
 
 // function for login
 async function login(email: string, password: string) {
     try {
-        const response: Interface.ILoginResponse = await axios.post(`${SOULSYNC_BASE_URL}/login`, {
+
+        console.log(`${process.env.NEXT_PUBLIC_SOULSYNC_BASE_URL}/soul/login}`);
+        
+        const response: Interface.ILoginResponse = await axios.post(`${process.env.NEXT_PUBLIC_SOULSYNC_BASE_URL}/soul/login`, {
             email,
             password,
         });
@@ -24,7 +27,7 @@ async function login(email: string, password: string) {
 // function for registration
 async function registration(name: string, email: string, password: string) {
     try {
-        const response = await axios.post(`${SOULSYNC_BASE_URL}/registration`, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_SOULSYNC_BASE_URL}/soul/registration`, {
             name,
             email,
             password,

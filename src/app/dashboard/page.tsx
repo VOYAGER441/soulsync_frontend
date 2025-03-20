@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import { AppSidebar } from "@/components/app-sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -17,12 +17,28 @@ import { ThemeSwitch } from "@/components/ui/switch";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import ChatInterface from "@/components/chat-interface";
+import { useState, useEffect } from "react";
+
+import { Suspense } from "react";
 
 
 export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DashboardContent />
+    </Suspense>
+  );
+}
 
+function DashboardContent() {
+
+  const [userId, setUserId] = useState<string | null>(null);
   const searchParams = useSearchParams();
-  const userId = searchParams.get("userId");
+
+  useEffect(() => {
+    setUserId(searchParams.get("userId"));
+  }, [searchParams]);
+
   console.log("userId", userId);
 
 

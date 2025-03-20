@@ -10,7 +10,7 @@ async function login(email: string, password: string) {
     try {
 
         console.log(`${process.env.NEXT_PUBLIC_SOULSYNC_BASE_URL}/soul/login}`);
-        
+
         const response: Interface.ILoginResponse = await axios.post(`${process.env.NEXT_PUBLIC_SOULSYNC_BASE_URL}/soul/login`, {
             email,
             password,

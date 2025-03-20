@@ -1,5 +1,6 @@
 "use client"
 import { AppSidebar } from "@/components/app-sidebar";
+import ChatInterface from "@/components/chat-interface";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Breadcrumb,
@@ -14,17 +15,26 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { ThemeSwitch } from "@/components/ui/switch";
-import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import ChatInterface from "@/components/chat-interface";
-import { useState, useEffect } from "react";
-
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Suspense } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 
 export default function Page() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div className="text-black dark:text-white">Loading...</div>}>
       <DashboardContent />
     </Suspense>
   );
@@ -46,7 +56,8 @@ function DashboardContent() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-14 shrink-0 items-center gap-2">
+        <header className="overflow-hidden flex h-14 shrink-0 items-center gap-2 w-full bg-white dark:bg-black text-black dark:text-white sticky top-0 z-50 px-4 shadow-md">
+
           <div className="flex flex-1 items-center gap-2 px-3">
             <SidebarTrigger />
             <Separator
@@ -66,17 +77,43 @@ function DashboardContent() {
               </BreadcrumbList>
             </Breadcrumb>
           </div>
-          <nav className="flex justify-between items-center p-4">
-            <span className="text-black text-xs dark:text-white">
-              Light <ThemeSwitch /> Dark
-            </span>
+
+          <nav className="flex items-center ">
+            <div className="flex items-center gap-x-2 text-black text-xs dark:text-white">
+              <span>Light</span>
+              <ThemeSwitch />
+              <span>Dark</span>
+            </div>
           </nav>
+
           <div className="ml-auto px-3">
 
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
+            <AlertDialog>
+              <AlertDialogTrigger>
+
+                <Avatar>
+                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Are you sure you want to sign out? You will need to log in again to access your account.
+                  </AlertDialogDescription>
+
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction>Log out</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+
+
+
 
           </div>
         </header>
@@ -85,7 +122,7 @@ function DashboardContent() {
           <div className="bg-muted/50 mx-auto h-24 w-full max-w-3xl rounded-xl" />
           <div className="bg-muted/50 mx-auto h-full w-full max-w-3xl rounded-xl" />
         </div> */}
-       <ChatInterface/>
+        <ChatInterface />
       </SidebarInset>
     </SidebarProvider>
   )

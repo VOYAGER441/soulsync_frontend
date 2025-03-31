@@ -44,3 +44,9 @@ export interface IChatHistory {
   reply: string;
   timestamp: string; // ISO string format
 }
+
+
+export interface IChatResponse {
+  reply: string,
+  sentiment: string,
+}

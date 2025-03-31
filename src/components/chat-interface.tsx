@@ -25,7 +25,7 @@ export default function ChatInterface() {
     setInputValue("");
     setLoading(true);
   
-    await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate delay
+    // await new Promise(resolve => setTimeout(resolve, 2000)); 
   
     const aiResponse = { id: uuidv4(), content: "Let me process that for you!", sender: "ai" };
     setMessages((prev) => [...prev, aiResponse]);

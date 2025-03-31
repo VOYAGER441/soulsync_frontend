@@ -6,6 +6,9 @@ import * as Interface from "@/interface/soul.interface";
 // function for call the database for user chat history and user details
 async function getChatHistory(userId: string) {
     try {
+        if (!userId) {
+            throw new Error("User ID is required");
+        }
         console.log("userid33333333333",userId);
 
         const response = await axios.get(`${process.env.NEXT_PUBLIC_SOULSYNC_BASE_URL}/soul/chat/${userId}`);

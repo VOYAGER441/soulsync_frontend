@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Send } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const initialMessages = [
   { id: "1", content: "Hello! How can I assist you today?", sender: "ai" }
@@ -16,22 +17,21 @@ export default function ChatInterface() {
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false); // Track AI response status
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
-
-    const newMessage = { id: Date.now().toString(), content: inputValue, sender: "user" };
+  
+    const newMessage = { id: uuidv4(), content: inputValue, sender: "user" };
     setMessages([...messages, newMessage]);
     setInputValue("");
-    setLoading(true); // Start loading indicator
-
-    setTimeout(() => {
-      const aiResponse = { id: (Date.now() + 1).toString(), content: "Let me process that for you!", sender: "ai" };
-      setMessages((prev) => [...prev, aiResponse]);
-      setLoading(false); // Stop loading indicator
-    }, 2000); // Simulated delay
+    setLoading(true);
+  
+    await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate delay
+  
+    const aiResponse = { id: uuidv4(), content: "Let me process that for you!", sender: "ai" };
+    setMessages((prev) => [...prev, aiResponse]);
+    setLoading(false);
   };
-
+  
   const handleKeyDown = (e: { key: string; shiftKey: unknown; preventDefault: () => void }) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();

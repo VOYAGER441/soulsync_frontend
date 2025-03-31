@@ -39,6 +39,7 @@ export interface ILoginResponse {
 }
 
 export interface IChatHistory {
+  id: string;
   message: string;
   reply: string;
   timestamp: string; // ISO string format

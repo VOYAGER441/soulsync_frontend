@@ -1,15 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
-import {
-  ChartArea,
-  Gem,
-  Search
-} from "lucide-react"
-import React, { useEffect/* , useState */ } from "react"
+import React, { useEffect, useState } from "react"
 
 import { NavFavorites } from "@/components/nav-favorites"
-import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
 // import { NavWorkspaces } from "@/components/nav-workspaces"
 import {
   Sidebar,
@@ -17,18 +11,19 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+// import * as Interface from "@/interface/soul.interface"
+import service from "@/service"
+import { ChartArea, Gem } from "lucide-react"
 import Image from "next/image"
 import { toast } from "sonner"
-import service from "@/service"
+import { NavMain } from "./nav-main"
+import { NavSecondary } from "./nav-secondary"
+
 
 // This is sample data.
 const data = {
   navMain: [
-    {
-      title: "Search",
-      url: "#",
-      icon: Search,
-    },
+
     {
       title: "Sentiment Chart",
       url: "#",
@@ -42,110 +37,107 @@ const data = {
       url: "#",
       icon: Gem,
     },
-  ],
-  histories: [
-    {
-      name: "Project Management & Task Tracking",
-      url: "#",
-      emoji: "📊",
-    },
-    {
-      name: "Family Recipe Collection & Meal Planning",
-      url: "#",
-      emoji: "🍳",
-    },
-    {
-      name: "Fitness Tracker & Workout Routines",
-      url: "#",
-      emoji: "💪",
-    },
-    {
-      name: "Book Notes & Reading List",
-      url: "#",
-      emoji: "📚",
-    },
-    {
-      name: "Sustainable Gardening Tips & Plant Care",
-      url: "#",
-      emoji: "🌱",
-    },
-    {
-      name: "Language Learning Progress & Resources",
-      url: "#",
-      emoji: "🗣️",
-    },
-    {
-      name: "Home Renovation Ideas & Budget Tracker",
-      url: "#",
-      emoji: "🏠",
-    },
-    {
-      name: "Personal Finance & Investment Portfolio",
-      url: "#",
-      emoji: "💰",
-    },
-    {
-      name: "Movie & TV Show Watchlist with Reviews",
-      url: "#",
-      emoji: "🎬",
-    },
-    {
-      name: "Daily Habit Tracker & Goal Setting",
-      url: "#",
-      emoji: "✅",
-    }
   ]
 }
 
-export function AppSidebar({ userId, ...props }: { userId: string } & React.ComponentProps<typeof Sidebar>) {
 
-  // const [message, setMessage] = useState("");
-  // const [reply, setReply] = useState("");
-  // const [sentiment, setSentiment] = useState("");
-  console.log("userid222222222",userId);
+
+export function AppSidebar({ userId, ...props }: { userId: string } & React.ComponentProps<typeof Sidebar>) {
+  const [histories, setHistories] = useState<{ id: string; name: string; url: string; emoji: string }[]>([]);
 
   useEffect(() => {
+    if (!userId || userId.trim() === "") {
+      console.warn("Skipping fetch: Invalid userId:", userId);
+      return;
+    }
+  
     const getChats = async () => {
-      if (!userId) {
-        console.error("Invalid userId");
-        toast.error("Invalid user ID provided");
-        return;
-      }
-
+      console.log("Fetching chat history for userId:", userId);
       try {
-        if (service?.chatService?.getChatHistory) {
-          const response = await service.chatService.getChatHistory(userId);
-          console.log("response",response);
-        } else {
+        if (!service?.chatService?.getChatHistory) {
           console.error("getChatHistory method is not defined");
           toast.error("Service unavailable");
+          return;
         }
+  
+        const response = await service.chatService.getChatHistory(userId);
+        if (!response || response.length === 0) {
+          console.warn("No chat history found for userId:", userId);
+          setHistories([]);
+          return;
+        }
+  
+        console.log("Chat History Response:", response);
+  
+        const chatHistory = response
+          .map(chat => {
+            try {
+              return typeof chat === "string" ? JSON.parse(chat) : chat;
+            } catch (error) {
+              console.error("Error parsing chat:", chat, error);
+              return null;
+            }
+          })
+          .filter(chat => chat && chat.id && chat.timestamp);
+  
+        const validChats = chatHistory.filter(chat => {
+          const isValid = chat.timestamp && !isNaN(new Date(chat.timestamp).getTime());
+          if (!isValid) console.warn("Invalid chat timestamp:", chat);
+          return isValid;
+        });
+  
+        validChats.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+        const latestChats = validChats.slice(0, 10);
+  
+        const formattedHistories = latestChats.map(chat => ({
+          id: chat.id,
+          name: `${getFormattedDate(new Date(chat.timestamp))} - ${chat.message.substring(0, 20)}...`,
+          url: `/chat/${chat.id}`,
+          emoji: "💬",
+        }));
+  
+        setHistories(formattedHistories);
+        console.log("Updated Histories:", formattedHistories);
       } catch (error) {
+        console.error("Error fetching chat history for userId:", userId, error);
         toast.error("Failed to fetch chat history");
-        console.error("Error fetching chat history:", error);
       }
     };
+  
     getChats();
-  }, [userId]);
-
-
-
+  }, [userId]); // Only run when `userId` is valid
+  
+  
+  const getFormattedDate = (date: Date) => {
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    if (date.toDateString() === today.toDateString()) return "Today";
+    if (date.toDateString() === yesterday.toDateString()) return "Yesterday";
+    return date.toLocaleDateString();
+  };
   return (
-    <Sidebar className="border-r-0" {...props}>
+    <Sidebar className="border-r-0 w-64" {...props}>
       <SidebarHeader>
-        {/* <TeamSwitcher teams={data.teams} /> */}
-        <div className="flex items-center gap-2 ">
-          <Image src={"/assets/logo1.webp"} alt={"logo"} width={50} height={50} />
-          <span className="text-lg font-bold">SoulSync</span>
+        {/* Logo & New Chat Button */}
+        <div className="flex items-center justify-between px-4">
+          <div className="flex items-center gap-2">
+            <Image src="/assets/logo1.webp" alt="logo" width={40} height={40} />
+            <span className="text-lg font-bold">SoulSync</span>
+          </div>
         </div>
-        <NavMain items={data.navMain} />
+        <button className="mt-4 w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+          + New Chat
+        </button>
       </SidebarHeader>
+      <NavMain items={data.navMain} />
       <SidebarContent>
-        <NavFavorites favorites={data.histories} />
-        {/* <NavWorkspaces workspaces={data.workspaces} /> */}
+        {/* Recent Chat History */}
+        <NavFavorites favorites={histories} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
+      
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

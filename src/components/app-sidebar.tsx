@@ -5,7 +5,7 @@ import {
   Gem,
   Search
 } from "lucide-react"
-import * as React from "react"
+import React, { useEffect/* , useState */ } from "react"
 
 import { NavFavorites } from "@/components/nav-favorites"
 import { NavMain } from "@/components/nav-main"
@@ -18,6 +18,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import Image from "next/image"
+import { toast } from "sonner"
+import service from "@/service"
 
 // This is sample data.
 const data = {
@@ -95,7 +97,39 @@ const data = {
   ]
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ userId, ...props }: { userId: string } & React.ComponentProps<typeof Sidebar>) {
+
+  // const [message, setMessage] = useState("");
+  // const [reply, setReply] = useState("");
+  // const [sentiment, setSentiment] = useState("");
+  console.log("userid222222222",userId);
+
+  useEffect(() => {
+    const getChats = async () => {
+      if (!userId) {
+        console.error("Invalid userId");
+        toast.error("Invalid user ID provided");
+        return;
+      }
+
+      try {
+        if (service?.chatService?.getChatHistory) {
+          const response = await service.chatService.getChatHistory(userId);
+          console.log("response",response);
+        } else {
+          console.error("getChatHistory method is not defined");
+          toast.error("Service unavailable");
+        }
+      } catch (error) {
+        toast.error("Failed to fetch chat history");
+        console.error("Error fetching chat history:", error);
+      }
+    };
+    getChats();
+  }, [userId]);
+
+
+
   return (
     <Sidebar className="border-r-0" {...props}>
       <SidebarHeader>

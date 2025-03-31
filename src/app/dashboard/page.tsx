@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/sidebar";
 import { ThemeSwitch } from "@/components/ui/switch";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Suspense } from "react";
 import {
@@ -42,21 +42,31 @@ export default function Page() {
 
 function DashboardContent() {
 
-  const [userId, setUserId] = useState<string | null>(null);
-  const searchParams = useSearchParams();
+  // const [userId, setUserId] = useState<string | null>(null);
+  // const searchParams = useSearchParams();
+
+  // useEffect(() => {
+  //   setUserId(searchParams.get("userId"));
+  // }, [searchParams]);
+
+  // console.log("userId", userId);
+  const [userId, setUserId] = useState<string>("");
 
   useEffect(() => {
-    setUserId(searchParams.get("userId"));
-  }, [searchParams]);
+    const storedUserId = localStorage.getItem("userId");
+    setUserId(storedUserId || "");
 
-  console.log("userId", userId);
+  }, []);
+
+  console.log("userId111111", userId);
+
 
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar userId={userId} />
       <SidebarInset>
-        <header className="overflow-hidden flex h-14 shrink-0 items-center gap-2 w-full bg-white dark:bg-black text-black dark:text-white sticky top-0 z-50 px-4 shadow-md">
+        <header className="overflow-hidden flex h-14 shrink-0 items-center gap-2 w-full bg-white dark:bg-black text-black dark:text-white sticky top-0 z-50 px-1 shadow-md">
 
           <div className="flex flex-1 items-center gap-2 px-3">
             <SidebarTrigger />

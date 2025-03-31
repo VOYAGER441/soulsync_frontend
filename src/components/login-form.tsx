@@ -24,17 +24,19 @@ export function LoginForm({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // console.log(email)
-    // console.log(password)
+
     try {
       const response = await service.appWriteService.login(email, password);
       toast.success("Login Successful");
-      
-      // alert(`Login Successful`);
-      // console.log(`Login Successful: ${JSON.stringify(response)}`)
-      // console.log("response.userId", response?.data?.userId);
+
+
       const userId = response?.data?.userId;
-      router.push(`/dashboard?userId=${userId}`);
+      // router.push(`/dashboard?userId=${userId}`);
+      // ✅ Store userId in local storage instead of URL
+      localStorage.setItem("userId", userId);
+
+      // ✅ Navigate without exposing userId
+      router.push("/dashboard");
     } catch (error) {
       toast.error("Login failed");
       console.error("Login Error:", error);

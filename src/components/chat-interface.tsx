@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown"; // ✅ Import ReactMarkdown
 import { v4 as uuidv4 } from "uuid";
+import { SentimentChart } from "@/components/chart-radial-stacked"; // Import the chart component
 
 const initialMessages = [
   { id: "1", content: "Hello! How can I assist you today?", sender: "ai" }
@@ -16,6 +17,8 @@ const initialMessages = [
 
 export default function ChatInterface({ userId }: { userId: string }) {
   const [messages, setMessages] = useState(initialMessages);
+  const [sentiment, setSentiment] = useState("positive");
+  const [sentimentScore, setSentimentScore] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -44,6 +47,23 @@ export default function ChatInterface({ userId }: { userId: string }) {
         ]);
 
 
+        console.log("AI Response:", aiResponse.sentiment);
+        
+
+        const sentimentLabel = aiResponse.sentiment[0].label;
+        const sentimentScore = aiResponse.sentiment[0].score;
+
+        console.log(
+          "Sentiment Label:", sentimentLabel,
+          "Sentiment Score:", sentimentScore
+        );
+
+
+        // Set sentiment and sentiment score separately
+        setSentiment(sentimentLabel);
+        setSentimentScore(sentimentScore);
+
+
 
 
       } catch (error) {
@@ -68,11 +88,11 @@ export default function ChatInterface({ userId }: { userId: string }) {
           console.error("Error fetching user data:", error);
         }
       };
-  
+
       fetchUserData();
     }
   }, [userId]);
-  
+
 
 
   useEffect(() => {
@@ -82,19 +102,18 @@ export default function ChatInterface({ userId }: { userId: string }) {
   return (
     <div className="flex flex-col h-full overflow-y-hidden text-white">
       <div className="flex-1 overflow-y-auto p-6 space-y-4 mb-50">
-        {messages.map((message) => (
-          <div key={message.id} className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}>
+        {messages.map((message, index) => (
+          <div key={message.id} className={`flex flex-col ${message.sender === "user" ? "items-end" : "items-start"}`}>
             <div className="flex max-w-[75%] space-x-3" style={{ wordBreak: "break-word", whiteSpace: "pre-wrap" }}>
-
               {/* AI Avatar (Left) */}
               {message.sender === "ai" && (
-                <Avatar className="h-10 w-10">
-                  <Image src={"/assets/logo1.webp"} alt="AI" width={40} height={40} />
+                <Avatar className="h-8 w-8">
+                  <Image src={"/assets/logo1.webp"} alt="AI" width={32} height={32} />
                 </Avatar>
               )}
 
               {/* Chat Bubble */}
-              <div className={`rounded-xl p-4 ${message.sender === "user" ? "bg-blue-600 text-white" : "bg-gray-800"}`}>
+              <div className={`rounded-xl p-3 ${message.sender === "user" ? "bg-blue-600 text-white" : "bg-gray-800"}`}>
                 {message.sender === "ai" ? (
                   <ReactMarkdown
                     components={{
@@ -110,22 +129,25 @@ export default function ChatInterface({ userId }: { userId: string }) {
 
               {/* User Avatar (Right) */}
               {message.sender === "user" && (
-                <Avatar className="h-10 w-10">
-                  {avatarUrl && <Image src={avatarUrl} alt="AI" width={40} height={40} />}
-
+                <Avatar className="h-8 w-8">
+                  {avatarUrl && <Image src={avatarUrl} alt="User" width={32} height={32} />}
                 </Avatar>
               )}
             </div>
+
+            {/* Sentiment Chart for AI Messages */}
+            {message.sender === "ai" && index === messages.length - 1 && sentimentScore > 0 && (
+              <SentimentChart sentiment={sentiment} sentimentScore={sentimentScore} />
+            )}
           </div>
         ))}
 
-
         {loading && (
           <div className="flex items-center space-x-2">
-            <Avatar className="h-10 w-10">
-              <Image src="/assets/logo1.webp" alt="AI" width={40} height={40} />
+            <Avatar className="h-8 w-8">
+              <Image src="/assets/logo1.webp" alt="AI" width={32} height={32} />
             </Avatar>
-            <div className="bg-gray-800 rounded-xl p-4 flex items-center">
+            <div className="bg-gray-800 rounded-xl p-3 flex items-center">
               <span className="text-gray-500 italic">Typing...</span>
               <div className="animate-spin border-t-2 border-gray-400 rounded-full h-4 w-4 ml-2"></div>
             </div>

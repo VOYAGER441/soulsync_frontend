@@ -48,9 +48,14 @@ export interface IChatHistory {
 
 
 export interface IChatResponse {
-  reply: string,
-  sentiment: string,
+  reply: string;
+  sentiment:sentiment[]; 
 }
+export interface sentiment {
+  label: string;
+  score: number;
+}
+
 
 export interface IUserAvatar {
   avatar: string;

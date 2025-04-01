@@ -64,22 +64,22 @@ export function AppSidebar({ userId, ...props }: { userId: string } & React.Comp
               return null;
             }
           })
-          .filter((chat) => chat && chat.id && chat.timestamp);
+          .filter((chat) => chat && chat.timestamp);
 
         chatHistory.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 
         const todayChats: any[] = [];
         const yesterdayChats: any[] = [];
         const olderChats: any[] = [];
-        const today = new Date().toDateString();
+        const today = new Date();
         const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
+        yesterday.setDate(today.getDate() - 1);
 
         chatHistory.forEach((chat) => {
-          const chatDate = new Date(chat.timestamp).toDateString();
-          if (chatDate === today) {
+          const chatDate = new Date(chat.timestamp);
+          if (chatDate.toDateString() === today.toDateString()) {
             todayChats.push(chat);
-          } else if (chatDate === yesterday.toDateString()) {
+          } else if (chatDate.toDateString() === yesterday.toDateString()) {
             yesterdayChats.push(chat);
           } else {
             olderChats.push(chat);
@@ -87,7 +87,7 @@ export function AppSidebar({ userId, ...props }: { userId: string } & React.Comp
         });
 
         const formatChats = (chats: any[], label: string) =>
-          chats.map((chat: { id: any; message: string; }) => ({
+          chats.map((chat: { id: any; message: string; timestamp: string }) => ({
             id: chat.id,
             name: `${chat.message.substring(0, 20)}...`,
             url: `/chat/${chat.id}`,

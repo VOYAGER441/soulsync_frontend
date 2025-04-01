@@ -39,7 +39,7 @@ async function chatWithAIModel(userId: string, message: string) {
             }
         });
         const chatResponse: Interface.IChatResponse = response.data;
-        // console.log("chatResponse", chatResponse);
+        console.log("chatResponse", chatResponse);
 
         return chatResponse;
     } catch (error) {

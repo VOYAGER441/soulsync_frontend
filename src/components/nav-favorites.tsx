@@ -24,6 +24,7 @@ export function NavFavorites({
   favorites,
 }: {
   favorites: {
+    id: string
     name: string
     url: string
     emoji: string
@@ -35,12 +36,12 @@ export function NavFavorites({
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       
       <SidebarMenu>
-        {favorites.map((item) => (
-          <SidebarMenuItem key={item.name}>
+        {favorites.map((favorite) => (
+          <SidebarMenuItem key={favorite.id}>
             <SidebarMenuButton asChild>
-              <a href={item.url} title={item.name}>
-                <span>{item.emoji}</span>
-                <span>{item.name}</span>
+              <a href={favorite.url} title={favorite.name}>
+                <span>{favorite.emoji}</span>
+                <span>{favorite.name}</span>
               </a>
             </SidebarMenuButton>
             <DropdownMenu>

@@ -36,8 +36,8 @@ export function NavFavorites({
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       
       <SidebarMenu>
-        {favorites.map((favorite) => (
-          <SidebarMenuItem key={favorite.id}>
+        {favorites.map((favorite,index) => (
+          <SidebarMenuItem key={index}> {/* Use `id` as the unique key */}
             <SidebarMenuButton asChild>
               <a href={favorite.url} title={favorite.name}>
                 <span>{favorite.emoji}</span>

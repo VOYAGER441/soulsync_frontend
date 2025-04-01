@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useTheme } from "next-themes";
@@ -6,9 +7,9 @@ import * as SwitchPrimitive from "@radix-ui/react-switch";
 import { cn } from "@/lib/utils";
 
 function ThemeSwitch({ className, ...props }: React.ComponentProps<typeof SwitchPrimitive.Root>) {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  console.log("theme", theme);
+  // console.log("theme", theme);
   
 
   useEffect(() => {

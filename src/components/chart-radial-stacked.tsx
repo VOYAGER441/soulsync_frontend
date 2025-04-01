@@ -57,7 +57,7 @@ export function SentimentChart({ sentiment, sentimentScore }: SentimentChartProp
           <RadialBar dataKey="negative" fill="var(--color-negative)" stackId="a" cornerRadius={2} className="stroke-transparent" />
         </RadialBarChart>
       </ChartContainer>
-      <div className="text-xs ml-1">
+      <div className="text-xs ml-1 text-white">
         <div className="font-medium">Sentiment</div>
         <div className="text-muted-foreground">
           {sentiment === "POSITIVE" ? "Very Positive" : sentiment === "NEGATIVE" ? "Negative" : "Neutral"}

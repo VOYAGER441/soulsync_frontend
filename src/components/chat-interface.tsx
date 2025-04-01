@@ -12,23 +12,23 @@ import { v4 as uuidv4 } from "uuid";
 import { SentimentChart } from "@/components/chart-radial-stacked"; // Import the chart component
 
 const initialMessages = [
-  { id: "1", content: "Hello! How can I assist you today?", sender: "ai" }
+  { id: "1", content: "Hello! How can I assist you today?", sender: "ai", sentiment: "Neutral", sentimentScore: 0.5 }
 ];
 
 export default function ChatInterface({ userId }: { userId: string }) {
   const [messages, setMessages] = useState(initialMessages);
-  const [sentiment, setSentiment] = useState("positive");
-  const [sentimentScore, setSentimentScore] = useState(0);
+
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [pendingMessage, setPendingMessage] = useState<string | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  // const [lastAISentiment, setLastAISentiment] = useState<{ sentiment: string; score: number } | null>(null);
 
   const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
 
-    const newMessage = { id: uuidv4(), content: inputValue, sender: "user" };
+    const newMessage = { id: uuidv4(), content: inputValue, sender: "user", sentiment: "Neutral", sentimentScore: 0 };
     setMessages((prev) => [...prev, newMessage]);
     setInputValue("");
     setPendingMessage(inputValue);
@@ -43,29 +43,14 @@ export default function ChatInterface({ userId }: { userId: string }) {
         const aiResponse = await service.chatService.chatWithAIModel(userId, pendingMessage);
         setMessages((prev) => [
           ...prev,
-          { id: uuidv4(), content: aiResponse.reply, sender: "ai" }
+          {
+            id: uuidv4(),
+            content: aiResponse.reply,
+            sender: "ai",
+            sentiment: aiResponse.sentiment[0].label,
+            sentimentScore: aiResponse.sentiment[0].score
+          }
         ]);
-
-
-        console.log("AI Response:", aiResponse.sentiment);
-        
-
-        const sentimentLabel = aiResponse.sentiment[0].label;
-        const sentimentScore = aiResponse.sentiment[0].score;
-
-        console.log(
-          "Sentiment Label:", sentimentLabel,
-          "Sentiment Score:", sentimentScore
-        );
-
-
-        // Set sentiment and sentiment score separately
-        setSentiment(sentimentLabel);
-        setSentimentScore(sentimentScore);
-
-
-
-
       } catch (error) {
         console.error("Error fetching AI response:", error);
       } finally {
@@ -102,7 +87,7 @@ export default function ChatInterface({ userId }: { userId: string }) {
   return (
     <div className="flex flex-col h-full overflow-y-hidden text-white">
       <div className="flex-1 overflow-y-auto p-6 space-y-4 mb-50">
-        {messages.map((message, index) => (
+        {messages.map((message) => (
           <div key={message.id} className={`flex flex-col ${message.sender === "user" ? "items-end" : "items-start"}`}>
             <div className="flex max-w-[75%] space-x-3" style={{ wordBreak: "break-word", whiteSpace: "pre-wrap" }}>
               {/* AI Avatar (Left) */}
@@ -115,13 +100,23 @@ export default function ChatInterface({ userId }: { userId: string }) {
               {/* Chat Bubble */}
               <div className={`rounded-xl p-3 ${message.sender === "user" ? "bg-blue-600 text-white" : "bg-gray-800"}`}>
                 {message.sender === "ai" ? (
-                  <ReactMarkdown
-                    components={{
-                      p: (props) => <p className="text-sm md:text-base whitespace-pre-wrap" {...props} />,
-                    }}
-                  >
-                    {message.content}
-                  </ReactMarkdown>
+                  <>
+                    <ReactMarkdown
+                      components={{
+                        p: (props) => <p className="text-sm md:text-base whitespace-pre-wrap" {...props} />,
+                      }}
+                    >
+                      {message.content}
+                    </ReactMarkdown>
+
+                    {/* Render SentimentChart for each AI message */}
+                    {message.sentiment && (
+                      <SentimentChart
+                        sentiment={message.sentiment}
+                        sentimentScore={message.sentimentScore}
+                      />
+                    )}
+                  </>
                 ) : (
                   <p className="text-sm md:text-base">{message.content}</p>
                 )}
@@ -134,13 +129,18 @@ export default function ChatInterface({ userId }: { userId: string }) {
                 </Avatar>
               )}
             </div>
-
-            {/* Sentiment Chart for AI Messages */}
-            {message.sender === "ai" && index === messages.length - 1 && sentimentScore > 0 && (
-              <SentimentChart sentiment={sentiment} sentimentScore={sentimentScore} />
-            )}
           </div>
         ))}
+
+
+        {/* Render SentimentChart separately based on stored sentiment data */}
+        {/* {lastAISentiment && (
+          <SentimentChart
+            sentiment={lastAISentiment.sentiment}
+            sentimentScore={lastAISentiment.score}
+          />
+        )} */}
+
 
         {loading && (
           <div className="flex items-center space-x-2">

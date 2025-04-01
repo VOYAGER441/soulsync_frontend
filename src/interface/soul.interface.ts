@@ -39,6 +39,7 @@ export interface ILoginResponse {
 }
 
 export interface IChatHistory {
+  [x: string]: string | string[];
   id: string;
   message: string;
   reply: string;
@@ -49,4 +50,8 @@ export interface IChatHistory {
 export interface IChatResponse {
   reply: string,
   sentiment: string,
+}
+
+export interface IUserAvatar {
+  avatar: string;
 }

@@ -58,7 +58,7 @@ function DashboardContent() {
 
   }, []);
 
-  console.log("userId111111", userId);
+  // console.log("userId111111", userId);
 
 
 
@@ -132,7 +132,7 @@ function DashboardContent() {
           <div className="bg-muted/50 mx-auto h-24 w-full max-w-3xl rounded-xl" />
           <div className="bg-muted/50 mx-auto h-full w-full max-w-3xl rounded-xl" />
         </div> */}
-        <ChatInterface />
+        <ChatInterface userId={userId}/>
       </SidebarInset>
     </SidebarProvider>
   )

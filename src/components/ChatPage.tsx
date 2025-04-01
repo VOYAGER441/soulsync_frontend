@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -7,15 +9,28 @@ import service from "@/service";
 import { Send } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import ReactMarkdown from "react-markdown"; // ✅ Import ReactMarkdown
+import ReactMarkdown from "react-markdown";
+import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
 
-const initialMessages = [
-  { id: "1", content: "Hello! How can I assist you today?", sender: "ai" }
-];
+export default function ChatPage({ userId }: { userId: string }) {
 
-export default function ChatInterface({ userId }: { userId: string }) {
-  const [messages, setMessages] = useState(initialMessages);
+    const [isClient, setIsClient] = useState(false);
+    const router = useRouter();
+    const { chatId } = router.query;
+  
+    // Set state to true when component is mounted (client-side)
+    useEffect(() => {
+      setIsClient(true);
+    }, []);
+  
+    if (!isClient) {
+      return null; // Return null or a loading spinner while the component is mounting
+    }
+
+
+  
+  const [messages, setMessages] = useState<any[]>([]); // Any type for general messages
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -42,10 +57,6 @@ export default function ChatInterface({ userId }: { userId: string }) {
           ...prev,
           { id: uuidv4(), content: aiResponse.reply, sender: "ai" }
         ]);
-
-
-
-
       } catch (error) {
         console.error("Error fetching AI response:", error);
       } finally {
@@ -57,7 +68,6 @@ export default function ChatInterface({ userId }: { userId: string }) {
     fetchAIResponse();
   }, [pendingMessage, userId]);
 
-
   useEffect(() => {
     if (userId) {
       const fetchUserData = async () => {
@@ -68,12 +78,27 @@ export default function ChatInterface({ userId }: { userId: string }) {
           console.error("Error fetching user data:", error);
         }
       };
-  
+
       fetchUserData();
     }
   }, [userId]);
-  
 
+  useEffect(() => {
+    if (chatId) {
+      // Fetch messages for today or yesterday
+      const fetchChatHistory = async () => {
+        try {
+          const chatHistory = await service.chatService.getChatHistory(userId);
+          const filteredMessages = chatHistory.filter((chat) => chat.category === chatId);
+          setMessages(filteredMessages);
+        } catch (error) {
+          console.error("Error fetching chat history:", error);
+        }
+      };
+
+      fetchChatHistory();
+    }
+  }, [chatId, userId]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -85,7 +110,6 @@ export default function ChatInterface({ userId }: { userId: string }) {
         {messages.map((message) => (
           <div key={message.id} className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}>
             <div className="flex max-w-[75%] space-x-3" style={{ wordBreak: "break-word", whiteSpace: "pre-wrap" }}>
-
               {/* AI Avatar (Left) */}
               {message.sender === "ai" && (
                 <Avatar className="h-10 w-10">
@@ -111,14 +135,12 @@ export default function ChatInterface({ userId }: { userId: string }) {
               {/* User Avatar (Right) */}
               {message.sender === "user" && (
                 <Avatar className="h-10 w-10">
-                  {avatarUrl && <Image src={avatarUrl} alt="AI" width={40} height={40} />}
-
+                  {avatarUrl && <Image src={avatarUrl} alt="User" width={40} height={40} />}
                 </Avatar>
               )}
             </div>
           </div>
         ))}
-
 
         {loading && (
           <div className="flex items-center space-x-2">
@@ -168,4 +190,3 @@ export default function ChatInterface({ userId }: { userId: string }) {
     </div>
   );
 }
-

@@ -1,29 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"
+"use client";
 
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react";
+import { NavFavorites } from "@/components/nav-favorites";
+import { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
+import service from "@/service";
+import { ChartArea, Gem } from "lucide-react";
+import Image from "next/image";
+import { toast } from "sonner";
+import { NavMain } from "./nav-main";
+import { NavSecondary } from "./nav-secondary";
 
-import { NavFavorites } from "@/components/nav-favorites"
-// import { NavWorkspaces } from "@/components/nav-workspaces"
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarRail,
-} from "@/components/ui/sidebar"
-// import * as Interface from "@/interface/soul.interface"
-import service from "@/service"
-import { ChartArea, Gem } from "lucide-react"
-import Image from "next/image"
-import { toast } from "sonner"
-import { NavMain } from "./nav-main"
-import { NavSecondary } from "./nav-secondary"
-
-
-// This is sample data.
 const data = {
   navMain: [
-
     {
       title: "Sentiment Chart",
       url: "#",
@@ -37,40 +26,37 @@ const data = {
       url: "#",
       icon: Gem,
     },
-  ]
-}
-
-
+  ],
+};
 
 export function AppSidebar({ userId, ...props }: { userId: string } & React.ComponentProps<typeof Sidebar>) {
-  const [histories, setHistories] = useState<{ id: string; name: string; url: string; emoji: string }[]>([]);
+  const [histories, setHistories] = useState<{ id: string; name: string; url: string; emoji: string; category: string }[]>(
+    []
+  );
 
   useEffect(() => {
     if (!userId || userId.trim() === "") {
       console.warn("Skipping fetch: Invalid userId:", userId);
       return;
     }
-  
+
     const getChats = async () => {
-      console.log("Fetching chat history for userId:", userId);
       try {
         if (!service?.chatService?.getChatHistory) {
           console.error("getChatHistory method is not defined");
           toast.error("Service unavailable");
           return;
         }
-  
+
         const response = await service.chatService.getChatHistory(userId);
         if (!response || response.length === 0) {
           console.warn("No chat history found for userId:", userId);
           setHistories([]);
           return;
         }
-  
-        console.log("Chat History Response:", response);
-  
+
         const chatHistory = response
-          .map(chat => {
+          .map((chat) => {
             try {
               return typeof chat === "string" ? JSON.parse(chat) : chat;
             } catch (error) {
@@ -78,48 +64,54 @@ export function AppSidebar({ userId, ...props }: { userId: string } & React.Comp
               return null;
             }
           })
-          .filter(chat => chat && chat.id && chat.timestamp);
-  
-        const validChats = chatHistory.filter(chat => {
-          const isValid = chat.timestamp && !isNaN(new Date(chat.timestamp).getTime());
-          if (!isValid) console.warn("Invalid chat timestamp:", chat);
-          return isValid;
+          .filter((chat) => chat && chat.id && chat.timestamp);
+
+        chatHistory.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
+        const todayChats: any[] = [];
+        const yesterdayChats: any[] = [];
+        const olderChats: any[] = [];
+        const today = new Date().toDateString();
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        chatHistory.forEach((chat) => {
+          const chatDate = new Date(chat.timestamp).toDateString();
+          if (chatDate === today) {
+            todayChats.push(chat);
+          } else if (chatDate === yesterday.toDateString()) {
+            yesterdayChats.push(chat);
+          } else {
+            olderChats.push(chat);
+          }
         });
-  
-        validChats.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-        const latestChats = validChats.slice(0, 10);
-  
-        const formattedHistories = latestChats.map(chat => ({
-          id: chat.id,
-          name: `${getFormattedDate(new Date(chat.timestamp))} - ${chat.message.substring(0, 20)}...`,
-          url: `/chat/${chat.id}`,
-          emoji: "💬",
-        }));
-  
-        setHistories(formattedHistories);
-        console.log("Updated Histories:", formattedHistories);
+
+        const formatChats = (chats: any[], label: string) =>
+          chats.map((chat: { id: any; message: string; }) => ({
+            id: chat.id,
+            name: `${chat.message.substring(0, 20)}...`,
+            url: `/chat/${chat.id}`,
+            emoji: "💬",
+            category: label,
+          }));
+
+        setHistories([
+          ...formatChats(todayChats, "Today"),
+          ...formatChats(yesterdayChats, "Yesterday"),
+          ...formatChats(olderChats, "Older"),
+        ]);
       } catch (error) {
         console.error("Error fetching chat history for userId:", userId, error);
         toast.error("Failed to fetch chat history");
       }
     };
-  
+
     getChats();
-  }, [userId]); // Only run when `userId` is valid
-  
-  
-  const getFormattedDate = (date: Date) => {
-    const today = new Date();
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    if (date.toDateString() === today.toDateString()) return "Today";
-    if (date.toDateString() === yesterday.toDateString()) return "Yesterday";
-    return date.toLocaleDateString();
-  };
+  }, [userId]);
+
   return (
     <Sidebar className="border-r-0 w-64" {...props}>
       <SidebarHeader>
-        {/* Logo & New Chat Button */}
         <div className="flex items-center justify-between px-4">
           <div className="flex items-center gap-2">
             <Image src="/assets/logo1.webp" alt="logo" width={40} height={40} />
@@ -132,11 +124,19 @@ export function AppSidebar({ userId, ...props }: { userId: string } & React.Comp
       </SidebarHeader>
       <NavMain items={data.navMain} />
       <SidebarContent>
-        {/* Recent Chat History */}
-        <NavFavorites favorites={histories} />
+        {["Today", "Yesterday", "Older"].map((category) => {
+          const chatsInCategory = histories.filter((chat) => chat.category === category);
+          if (chatsInCategory.length === 0) return null;
+
+          return (
+            <div key={category}>
+              <h3 className="text-xs font-semibold text-gray-400 px-4 mt-2">{category}</h3>
+              <NavFavorites favorites={chatsInCategory} />
+            </div>
+          );
+        })}
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
-      
       <SidebarRail />
     </Sidebar>
   );

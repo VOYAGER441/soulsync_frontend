@@ -1,10 +1,10 @@
-"use client"; // Required because useSearchParams is a client-side hook
+"use client"; // Ensures it's a client component
 
-import React from "react";
+import React, { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { ChatDetails } from "@/components/chat-details";
 
-export default function Page() {
+function ChatPageContent() {
   const searchParams = useSearchParams();
   const chatIdParam = searchParams.get("c") || "";
   const userIdParam = searchParams.get("u") || "";
@@ -27,9 +27,13 @@ export default function Page() {
   console.log("Decoded Chat ID:", decodedChatId);
   console.log("Decoded User ID:", decodedUserId);
 
+  return <ChatDetails chatId={decodedChatId} userId={decodedUserId} />;
+}
+
+export default function Page() {
   return (
-    <div>
-      <ChatDetails chatId={decodedChatId} userId={decodedUserId} />
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <ChatPageContent />
+    </Suspense>
   );
 }

@@ -90,23 +90,20 @@ export function AppSidebar({ userId, ...props }: { userId: string } & React.Comp
         const encodeData = (data: string) => {
           return btoa(data).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_"); // URL-safe Base64
         };
-
+        
         const formatChats = (chats: any[], label: string) =>
           chats.map((chat: { id: any; message: string; timestamp: string }) => {
             const encodedId = encodeData(chat.id);
             const encodedUserId = encodeData(userId);
-
+        
             return {
               id: chat.id,
               name: `${chat.message.substring(0, 20)}...`,
-              url: `/chat/${encodedId}/${encodedUserId}`,
+              url: `/chat?c=${encodedId}&u=${encodedUserId}`, // Use query parameters instead of dynamic routes
               emoji: "☮️",
               category: label,
             };
           });
-
-
-
 
         setHistories([
           ...formatChats(todayChats, "Today"),

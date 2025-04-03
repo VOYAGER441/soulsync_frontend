@@ -12,6 +12,9 @@ import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
+import * as Interface from "@/interface/soul.interface";
+
+
 
 export default function ChatPage({ userId }: { userId: string }) {
 
@@ -72,7 +75,10 @@ export default function ChatPage({ userId }: { userId: string }) {
     if (userId) {
       const fetchUserData = async () => {
         try {
-          const userData = await service.appWriteService.getCurrentUserData(userId);
+          const response = await service.appWriteService.getCurrentUserData(userId);
+
+          const userData: Interface.IUserAvatar = JSON.parse(response.avatar); // Ensure avatar is parsed into IUserAvatar
+
           setAvatarUrl(userData?.avatar || "/assets/logo1.webp");
         } catch (error) {
           console.error("Error fetching user data:", error);

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -5,13 +6,15 @@ import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import service from "@/service";
 import { Loader } from "lucide-react";
+import * as Interface from "@/interface/soul.interface";
+
 
 interface ChatDetailsProps {
   chatId: string;
   userId: string;
 }
 
-export function ChatDetails({ chatId }: ChatDetailsProps) {
+export function ChatDetails({ chatId, userId }: ChatDetailsProps) {
   const [chat, setChat] = useState<{ id: string; message: string; reply: string; timestamp: string } | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -19,10 +22,27 @@ export function ChatDetails({ chatId }: ChatDetailsProps) {
     const fetchChatDetails = async () => {
       setLoading(true); // Ensure loading is set to true at the start
       try {
-        const chatData = await service.chatService.getChatHistory(chatId);
+        const response = await service.appWriteService.getCurrentUserData(userId);
+
+        const chatData: Interface.IChatHistoryResponse = {
+          chatHistory: (response.chatHistory as unknown as Interface.IChatHistory[]).map((chat) => ({
+            id: chat.id,
+            message: chat.message,
+            reply: chat.reply,
+            timestamp: chat.timestamp,
+          })),
+          moodTrends: (response.moodTrends as unknown as Interface.SentimentAnalysis[]).map((trend) => ({
+            label: trend.label,
+            score: trend.score,
+            id: trend.id,
+            sentiment: trend.sentiment,
+            timestamp: trend.timestamp,
+          })),
+        };
+
         console.log("chatData", chatData);
 
-        setChat(chatData.length > 0 ? chatData[0] : null);
+        setChat(chatData.chatHistory.length > 0 ? chatData.chatHistory[0] : null);
       } catch (error) {
         console.error("Failed to fetch chat details:", error);
         toast.error("Failed to load chat details");

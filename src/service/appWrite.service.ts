@@ -50,7 +50,7 @@ try {
     // console.log(`${process.env.NEXT_PUBLIC_SOULSYNC_BASE_URL}/soul/user/${userId}`);
     
     const response=await axios.get(`${process.env.NEXT_PUBLIC_SOULSYNC_BASE_URL}/soul/user/${userId}`);
-    const userData: Interface.IUserAvatar = response.data;
+    const userData:Interface.IUserProfile = response.data;
 
     // console.log("userData",userData);
     return userData;
@@ -60,6 +60,9 @@ try {
     throw error;
 }
 }
+
+
+
 
 
 

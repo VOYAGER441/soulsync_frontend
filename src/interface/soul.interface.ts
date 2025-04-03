@@ -60,3 +60,27 @@ export interface sentiment {
 export interface IUserAvatar {
   avatar: string;
 }
+
+
+export interface IChatRes {
+  reply: string;
+  sentiment: SentimentAnalysis[];
+}
+
+export interface SentimentAnalysis {
+  label: string;
+  score: number;
+  id: string;
+  sentiment: {
+    label: string; // Add "NEUTRAL" for better classification
+    score: number;
+  }[];
+  timestamp: string; // Keep timestamp for tracking
+}
+
+
+export interface IChatHistoryResponse {
+  chatHistory: IChatHistory[];
+  moodTrends: SentimentAnalysis[];
+  
+}

@@ -1,24 +1,16 @@
-"use client"
+'use client';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Suspense } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import ChatInterface from "@/components/chat-interface";
+import { ThemeSwitch } from "@/components/ui/switch";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { ThemeSwitch } from "@/components/ui/switch";
-import Image from "next/image";
-// import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Suspense } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,7 +21,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog";
+import Image from "next/image";
+import { Separator } from "@/components/ui/separator";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
+import { Loader } from "lucide-react";
 
 
 export default function Page() {
@@ -41,26 +42,33 @@ export default function Page() {
 }
 
 function DashboardContent() {
-
-  // const [userId, setUserId] = useState<string | null>(null);
-  // const searchParams = useSearchParams();
-
-  // useEffect(() => {
-  //   setUserId(searchParams.get("userId"));
-  // }, [searchParams]);
-
-  // console.log("userId", userId);
-  const [userId, setUserId] = useState<string>("");
+  const router = useRouter();
+  const [userId, setUserId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
-    setUserId(storedUserId || "");
 
-  }, []);
+    if (!storedUserId) {
+      router.replace("/login"); 
+    } else if (userId !== storedUserId) {
+      setUserId(storedUserId);
+    }
 
-  // console.log("userId111111", userId);
+    setLoading(false);
+  }, [router, userId]);
 
+  
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader className="animate-spin text-gray-500 dark:text-gray-300" size={32} />
+      </div>
+    );
+  }
 
+  
+  if (!userId) return null;
 
   return (
     <SidebarProvider>
@@ -97,15 +105,12 @@ function DashboardContent() {
           </nav>
 
           <div className="ml-auto px-3">
-
             <AlertDialog>
               <AlertDialogTrigger>
-
                 <Avatar>
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -113,27 +118,20 @@ function DashboardContent() {
                   <AlertDialogDescription>
                     Are you sure you want to sign out? You will need to log in again to access your account.
                   </AlertDialogDescription>
-
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction>Log out</AlertDialogAction>
+                  <AlertDialogAction onClick={() => {
+                    localStorage.removeItem("userId"); 
+                    router.replace("/login");
+                  }}>Log out</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
-
-
-
-
           </div>
         </header>
-        {/* loading add //TODO */}
-        {/* <div className="flex flex-1 flex-col gap-4 px-4 py-10">
-          <div className="bg-muted/50 mx-auto h-24 w-full max-w-3xl rounded-xl" />
-          <div className="bg-muted/50 mx-auto h-full w-full max-w-3xl rounded-xl" />
-        </div> */}
-        <ChatInterface userId={userId}/>
+        <ChatInterface userId={userId} />
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

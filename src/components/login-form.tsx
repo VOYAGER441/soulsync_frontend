@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import service from "@/service";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
 export function LoginForm({
   className,
@@ -18,7 +19,11 @@ export function LoginForm({
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   const router = useRouter();
 
@@ -41,6 +46,14 @@ export function LoginForm({
       toast.error("Login failed");
       console.error("Login Error:", error);
     }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader className="animate-spin text-gray-500 dark:text-gray-300" size={32} />
+      </div>
+    );
   }
 
 

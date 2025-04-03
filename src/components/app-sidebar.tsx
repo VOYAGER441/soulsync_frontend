@@ -10,6 +10,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import { NavMain } from "./nav-main";
 import { NavSecondary } from "./nav-secondary";
+// import { NavSecondary } from "./nav-secondary";
 
 const data = {
   navMain: [
@@ -86,14 +87,26 @@ export function AppSidebar({ userId, ...props }: { userId: string } & React.Comp
           }
         });
 
+        const encodeData = (data: string) => {
+          return btoa(data).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_"); // URL-safe Base64
+        };
+
         const formatChats = (chats: any[], label: string) =>
-          chats.map((chat: { id: any; message: string; timestamp: string }) => ({
-            id: chat.id,
-            name: `${chat.message.substring(0, 20)}...`,
-            url: `/chat/${chat.id}`,
-            emoji: "💬",
-            category: label,
-          }));
+          chats.map((chat: { id: any; message: string; timestamp: string }) => {
+            const encodedId = encodeData(chat.id);
+            const encodedUserId = encodeData(userId);
+
+            return {
+              id: chat.id,
+              name: `${chat.message.substring(0, 20)}...`,
+              url: `/chat/${encodedId}/${encodedUserId}`,
+              emoji: "☮️",
+              category: label,
+            };
+          });
+
+
+
 
         setHistories([
           ...formatChats(todayChats, "Today"),
@@ -109,6 +122,7 @@ export function AppSidebar({ userId, ...props }: { userId: string } & React.Comp
     getChats();
   }, [userId]);
 
+  console.log(userId, "userId");
   return (
     <Sidebar className="border-r-0 w-64" {...props}>
       <SidebarHeader>
@@ -118,9 +132,7 @@ export function AppSidebar({ userId, ...props }: { userId: string } & React.Comp
             <span className="text-lg font-bold">SoulSync</span>
           </div>
         </div>
-        <button className="mt-4 w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
-          + New Chat
-        </button>
+
       </SidebarHeader>
       <NavMain items={data.navMain} />
       <SidebarContent>
@@ -135,8 +147,9 @@ export function AppSidebar({ userId, ...props }: { userId: string } & React.Comp
             </div>
           );
         })}
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
+
+      <NavSecondary items={data.navSecondary} className="mt-auto z-10" />
       <SidebarRail />
     </Sidebar>
   );

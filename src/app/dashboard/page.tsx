@@ -31,6 +31,8 @@ import {
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
 import { Loader } from "lucide-react";
+import service from "@/service";
+import * as Interface from "@/interface/soul.interface";
 
 
 export default function Page() {
@@ -45,9 +47,30 @@ function DashboardContent() {
   const router = useRouter();
   const [userId, setUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
+
+    const fetchUserData = async () => {
+      try {
+        if (!storedUserId) {
+          throw new Error("User ID is null");
+
+        }
+        const response = await service.appWriteService.getCurrentUserData(storedUserId);
+        // console.log("response", response);
+        
+        const userData: Interface.IUserAvatar = {
+          avatar: response.avatar
+        };
+
+        setAvatarUrl(userData?.avatar || "/assets/logo1.webp");
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
 
     if (!storedUserId) {
       router.replace("/login"); 
@@ -66,9 +89,15 @@ function DashboardContent() {
       </div>
     );
   }
+// useEffect(() => {
+//   if (userId) {
+   
+//   }
+// }, [userId]);
 
-  
-  if (!userId) return null;
+if (!userId) return null;
+
+
 
   return (
     <SidebarProvider>
@@ -108,7 +137,7 @@ function DashboardContent() {
             <AlertDialog>
               <AlertDialogTrigger>
                 <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarImage src={`${avatarUrl}`} />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               </AlertDialogTrigger>

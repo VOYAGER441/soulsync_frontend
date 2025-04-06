@@ -9,7 +9,7 @@ async function getChatHistory(userId: string) {
         if (!userId) {
             throw new Error("User ID is required");
         }
-        // console.log("userid33333333333", userId);
+        console.log("userid33333333333", userId);
 
         const response = await axios.get(`${process.env.NEXT_PUBLIC_SOULSYNC_BASE_URL}/soul/chat/${userId}`);
         const chats: Interface.IChatHistory[] = response.data;
@@ -38,8 +38,11 @@ async function chatWithAIModel(userId: string, message: string) {
                 "Authorization-HuggingFace": process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY,
             }
         });
-        const chatResponse: Interface.IChatResponse = response.data;
-        console.log("chatResponse", chatResponse);
+        const chatResponse: Interface.IChatResponse={
+            reply: response.data.reply,
+            sentiment: response.data.sentiment,
+        }
+        // console.log("chatResponse", chatResponse);
 
         return chatResponse;
     } catch (error) {

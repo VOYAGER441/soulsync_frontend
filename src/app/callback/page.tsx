@@ -7,7 +7,7 @@ import { toast } from "sonner";
 
 export default function OAuthCallbackPage() {
 
-    console.log("OAuthCallbackPage rendered");
+    // console.log("OAuthCallbackPage rendered");
     
   const router = useRouter();
 

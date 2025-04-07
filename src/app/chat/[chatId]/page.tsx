@@ -24,8 +24,8 @@ export default function Page() {
   const decodedChatId = decodeData(chatIdParam);
   const decodedUserId = decodeData(userIdParam);
 
-  console.log("Decoded Chat ID:", decodedChatId);
-  console.log("Decoded User ID:", decodedUserId);
+  // console.log("Decoded Chat ID:", decodedChatId);
+  // console.log("Decoded User ID:", decodedUserId);
 
   return (
     <div>

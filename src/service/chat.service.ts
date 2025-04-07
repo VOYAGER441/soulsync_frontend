@@ -9,7 +9,7 @@ async function getChatHistory(userId: string) {
         if (!userId) {
             throw new Error("User ID is required");
         }
-        console.log("userid33333333333", userId);
+        // console.log("userid33333333333", userId);
 
         const response = await axios.get(`${process.env.NEXT_PUBLIC_SOULSYNC_BASE_URL}/soul/chat/${userId}`);
 
@@ -28,7 +28,7 @@ async function getChatHistory(userId: string) {
 
 
 
-        console.log("chats", chats);
+        // console.log("chats", chats);
 
         return chats;
 
@@ -79,7 +79,7 @@ async function getFilterChat(userId: string, chatId: string) {
         throw new Error("No chat found with the provided ID");
     }
 
-    console.log("filteredChats", filteredChats);
+    // console.log("filteredChats", filteredChats);
 
     return filteredChats;
 

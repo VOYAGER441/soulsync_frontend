@@ -131,7 +131,7 @@ export function AppSidebar({ userId, ...props }: { userId: string } & React.Comp
     getChats();
   }, [userId]);
 
-  console.log(userId, "userId");
+  // console.log(userId, "userId");
   return (
     <Sidebar className="border-r-0 w-64" {...props}>
       <SidebarHeader>

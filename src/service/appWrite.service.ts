@@ -28,7 +28,7 @@ const collectionId = process.env.NEXT_PUBLIC_APPWRITE_USERS_COLLECTION_ID!;
 async function login(email: string, password: string) {
     try {
 
-        console.log(`${process.env.NEXT_PUBLIC_SOULSYNC_BASE_URL}/soul/login}`);
+        // console.log(`${process.env.NEXT_PUBLIC_SOULSYNC_BASE_URL}/soul/login}`);
 
         const response: Interface.ILoginResponse = await axios.post(`${process.env.NEXT_PUBLIC_SOULSYNC_BASE_URL}/soul/login`, {
             email,
@@ -105,7 +105,7 @@ async function handleOAuthCallback() {
         const user = await account.get(); // 1. Get the user from Auth
         const userId = user.$id;
 
-        console.log("Userrrrrrrrrrr ID:", userId);
+        // console.log("Userrrrrrrrrrr ID:", userId);
         
 
         // 2. Check if the user exists in the database
@@ -124,7 +124,7 @@ async function handleOAuthCallback() {
                 chatHistory: [],
                 moodTrends: []
             });
-            console.log("Created new user in database");
+            // console.log("Created new user in database");
         }
 
         localStorage.setItem("userId", userId);

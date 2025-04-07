@@ -106,7 +106,7 @@ export default function ChatPageContent({ userId }: { userId: string }) {
       const fetchChatHistory = async () => {
         try {
           const chatHistory = await service.chatService.getChatHistory(userId);
-          const filteredMessages = chatHistory.filter((chat) => chat.category === chatId);
+          const filteredMessages = chatHistory.filter((chat) => chat.id === chatId);
           setMessages(filteredMessages);
         } catch (error) {
           console.error("Error fetching chat history:", error);
@@ -205,7 +205,7 @@ export default function ChatPageContent({ userId }: { userId: string }) {
                 handleSendMessage();
               }
             }}
-            placeholder="Type here..."
+            placeholder="Ask anything"
             className="flex-1 bg-transparent text-black dark:text-white border border-gray-700 rounded-full py-3 pl-12 pr-24 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary resize-none h-12 overflow-hidden"
             style={{ minHeight: "48px" }}
           />

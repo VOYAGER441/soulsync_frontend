@@ -10,7 +10,9 @@ import Image from "next/image";
 import { toast } from "sonner";
 import { NavMain } from "./nav-main";
 import { NavSecondary } from "./nav-secondary";
-// import { NavSecondary } from "./nav-secondary";
+import * as Interface from "@/interface/soul.interface";
+
+
 
 const data = {
   navMain: [
@@ -48,8 +50,18 @@ export function AppSidebar({ userId, ...props }: { userId: string } & React.Comp
           toast.error("Service unavailable");
           return;
         }
+        const res = await service.chatService.getChatHistory(userId);
 
-        const response = await service.chatService.getChatHistory(userId);
+       
+
+        const response = res.map((chat: Interface.IOnlyChatHistory) => ({
+          id: chat.id,
+          message: chat.message || "",
+          reply: chat.reply || "",
+          timestamp: chat.timestamp || "",
+        })) as Interface.IOnlyChatHistory[];
+        
+
         if (!response || response.length === 0) {
           console.warn("No chat history found for userId:", userId);
           setHistories([]);

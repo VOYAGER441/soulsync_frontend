@@ -65,7 +65,16 @@ export function LoginForm({
         console.log("Google Login Response:", res);
         
         // localStorage.setItem("userId", res.$id);
-        router.push("/callback");
+        if (res) {
+          localStorage.setItem("userId", res.$id);
+          console.log("Google Login Success:", res);
+          
+          router.push("/callback");
+        }
+        else {
+          toast.error("Google login failed");
+          router.push('/failure');
+        }
 
     } catch (error) {
       toast.error("Google login failed");

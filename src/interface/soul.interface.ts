@@ -38,22 +38,22 @@ export interface ILoginResponse {
   };
 }
 
-export interface IChatHistory {
-  [x: string]: string | string[];
+export interface IAllChatHistory {
   id: string;
   message: string;
   reply: string;
+  sentiment:sentiment[];
   timestamp: string; // ISO string format
 }
 
+export interface sentiment {
+  label: string;
+  score: number;
+}
 
 export interface IChatResponse {
   reply: string;
   sentiment:sentiment[]; 
-}
-export interface sentiment {
-  label: string;
-  score: number;
 }
 
 
@@ -80,7 +80,15 @@ export interface SentimentAnalysis {
 
 
 export interface IChatHistoryResponse {
-  chatHistory: IChatHistory[];
+  chatHistory: IAllChatHistory[];
   moodTrends: SentimentAnalysis[];
   
+}
+
+
+export interface IOnlyChatHistory {
+  id: string;
+  message: string;
+  reply: string;
+  timestamp: string; // ISO string format
 }

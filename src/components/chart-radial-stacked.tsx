@@ -44,7 +44,7 @@ export function SentimentChart({ sentiment, sentimentScore }: SentimentChartProp
                 if (viewBox && "cx" in viewBox && "cy" in viewBox) {
                   return (
                     <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                      <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-xs font-bold text-white">
+                      <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-xs font-bold text-white ">
                         {positivePercentage}%
                       </tspan>
                     </text>

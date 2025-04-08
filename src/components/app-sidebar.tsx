@@ -18,7 +18,7 @@ const data = {
   navMain: [
     {
       title: "Sentiment Chart",
-      url: "#",
+      url: "/chart",
       icon: ChartArea,
       badge: "10",
     },
@@ -143,7 +143,7 @@ export function AppSidebar({ userId, ...props }: { userId: string } & React.Comp
         </div>
 
       </SidebarHeader>
-      <NavMain items={data.navMain} />
+      <NavMain items={data.navMain} userId={userId}/>
       <SidebarContent>
         {["Today", "Yesterday", "Older"].map((category) => {
           const chatsInCategory = histories.filter((chat) => chat.category === category);

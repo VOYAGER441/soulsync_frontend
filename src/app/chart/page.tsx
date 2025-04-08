@@ -1,30 +1,27 @@
-import React from 'react';
+"use client"; // Ensures it's a client component
 
-const RandomThoughtsPage: React.FC = () => {
-    const randomThoughts = [
-        "Why do we dream?",
-        "What if the universe is a simulation?",
-        "Is time travel possible?",
-        "What came first, the chicken or the egg?",
-        "Do parallel universes exist?",
-        "What is the meaning of life?",
-        "Can we ever truly know reality?",
-        "Why do we laugh?",
-        "What if gravity stopped working?",
-        "Are we alone in the universe?"
-    ];
+import { Chart } from "@/components/sentimentChat";
+import utils from "@/utils";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-    const getRandomThought = () => {
-        const index = Math.floor(Math.random() * randomThoughts.length);
-        return randomThoughts[index];
-    };
 
-    return (
-        <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif', textAlign: 'center' }}>
-            <h1>Random Thought of the Moment</h1>
-            <p style={{ fontSize: '1.5rem', marginTop: '20px' }}>{getRandomThought()}</p>
-        </div>
-    );
-};
+function ChartPage() {
+  const searchParams = useSearchParams();
+  const userIdParam = searchParams.get("u") || "";
 
-export default RandomThoughtsPage;
+
+  const decodedUserId = utils.decodeData(userIdParam);
+
+  console.log("Decoded User ID:", decodedUserId);
+
+  return <Chart userId={decodedUserId}/>;
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ChartPage />
+    </Suspense>
+  );
+}

@@ -3,26 +3,17 @@
 import React, { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { ChatDetails } from "@/components/chat-details";
+import utils from "@/utils";
 
 function ChatPageContent() {
   const searchParams = useSearchParams();
   const chatIdParam = searchParams.get("c") || "";
   const userIdParam = searchParams.get("u") || "";
 
-  // Function to decode Base64 (URL-safe)
-  const decodeData = (encoded: string) => {
-    try {
-      const base64 = encoded.replace(/-/g, "+").replace(/_/g, "/");
-      return atob(base64);
-    } catch (error) {
-      console.error("Invalid Base64 encoding:", error);
-      return "";
-    }
-  };
 
   // Decode chatId and userId separately
-  const decodedChatId = decodeData(chatIdParam);
-  const decodedUserId = decodeData(userIdParam);
+  const decodedChatId = utils.decodeData(chatIdParam);
+  const decodedUserId = utils.decodeData(userIdParam);
 
   console.log("Decoded Chat ID:", decodedChatId);
   console.log("Decoded User ID:", decodedUserId);

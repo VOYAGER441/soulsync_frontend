@@ -42,18 +42,20 @@ export interface IAllChatHistory {
   id: string;
   message: string;
   reply: string;
-  sentiment:sentiment[];
+  sentiment:ISentiment[];
   timestamp: string; // ISO string format
 }
 
-export interface sentiment {
+export interface ISentiment {
+  id: string;
   label: string;
   score: number;
+  timestamp: string;
 }
 
 export interface IChatResponse {
   reply: string;
-  sentiment:sentiment[]; 
+  sentiment:ISentiment[]; 
 }
 
 

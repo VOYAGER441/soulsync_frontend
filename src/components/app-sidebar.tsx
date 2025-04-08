@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { NavMain } from "./nav-main";
 import { NavSecondary } from "./nav-secondary";
 import * as Interface from "@/interface/soul.interface";
+import utils from "@/utils";
 
 
 
@@ -99,14 +100,12 @@ export function AppSidebar({ userId, ...props }: { userId: string } & React.Comp
           }
         });
 
-        const encodeData = (data: string) => {
-          return btoa(data).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_"); // URL-safe Base64
-        };
+        
         
         const formatChats = (chats: any[], label: string) =>
           chats.map((chat: { id: any; message: string; timestamp: string }) => {
-            const encodedId = encodeData(chat.id);
-            const encodedUserId = encodeData(userId);
+            const encodedId = utils.encodeData(chat.id);
+            const encodedUserId = utils.encodeData(userId);
         
             return {
               id: chat.id,

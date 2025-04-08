@@ -85,12 +85,25 @@ async function getFilterChat(userId: string, chatId: string) {
 
 }
 
+async function getSentiment(userId: string) {
+    try {
+        if (!userId) {
+            throw new Error("User ID is required");
+        }
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_SOULSYNC_BASE_URL}/soul/mood/${userId}`);
 
+        return response;
+    } catch (error) {
+        console.log("error", error);
+        throw new Error("Internal server error")
+    }
+}
 
 
 
 export default {
     getChatHistory,
     chatWithAIModel,
-    getFilterChat
+    getFilterChat,
+    getSentiment
 }

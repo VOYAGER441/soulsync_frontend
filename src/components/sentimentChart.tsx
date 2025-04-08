@@ -129,24 +129,24 @@ export function Chart({ userId }: { userId: string }) {
                             <linearGradient id="fillPositive" x1="0" y1="0" x2="0" y2="1">
                                 <stop
                                     offset="5%"
-                                    stopColor="hsl(var(--chart-1))"
+                                    stopColor="var(--color-positive)"
                                     stopOpacity={0.8}
                                 />
                                 <stop
                                     offset="95%"
-                                    stopColor="hsl(var(--chart-1))"
+                                    stopColor="var(--color-positive)"
                                     stopOpacity={0.1}
                                 />
                             </linearGradient>
                             <linearGradient id="fillNegative" x1="0" y1="0" x2="0" y2="1">
                                 <stop
                                     offset="5%"
-                                    stopColor="hsl(var(--chart-2))"
+                                    stopColor="var(--color-negative)"
                                     stopOpacity={0.8}
                                 />
                                 <stop
                                     offset="95%"
-                                    stopColor="hsl(var(--chart-2))"
+                                    stopColor="var(--color-negative)"
                                     stopOpacity={0.1}
                                 />
                             </linearGradient>
@@ -172,14 +172,14 @@ export function Chart({ userId }: { userId: string }) {
                             dataKey="positive"
                             type="natural"
                             fill="url(#fillPositive)"
-                            stroke="hsl(var(--chart-1))" // Corrected to match positive color
+                            stroke="var(--color-positive)" // Corrected to match positive color
                             stackId="a"
                         />
                         <Area
                             dataKey="negative"
                             type="natural"
                             fill="url(#fillNegative)"
-                            stroke="hsl(var(--chart-2))" // Corrected to match negative color
+                            stroke="var(--color-negative)" // Corrected to match negative color
                             stackId="a"
                         />
                         <ChartLegend content={<ChartLegendContent />} />

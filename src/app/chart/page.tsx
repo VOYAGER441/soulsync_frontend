@@ -7,21 +7,26 @@ import { Suspense } from "react";
 
 
 function ChartPage() {
-  const searchParams = useSearchParams();
-  const userIdParam = searchParams.get("u") || "";
+    const searchParams = useSearchParams();
+    const userIdParam = searchParams.get("u") || "";
 
 
-  const decodedUserId = utils.decodeData(userIdParam);
+    const decodedUserId = utils.decodeData(userIdParam);
 
-  console.log("Decoded User ID:", decodedUserId);
+    console.log("Decoded User ID:", decodedUserId);
 
-  return <Chart userId={decodedUserId}/>;
+    return (<div>
+        
+
+        <Chart userId={decodedUserId} />;
+
+    </div>)
 }
 
 export default function Page() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ChartPage />
-    </Suspense>
-  );
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ChartPage />
+        </Suspense>
+    );
 }

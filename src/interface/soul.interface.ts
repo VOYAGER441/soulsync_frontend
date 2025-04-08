@@ -51,6 +51,9 @@ export interface ISentiment {
   label: string;
   score: number;
   timestamp: string;
+  positive: number;
+  negative: number;
+  displayTimestamp?: string; // Added optional property for display purposes
 }
 
 export interface IChatResponse {

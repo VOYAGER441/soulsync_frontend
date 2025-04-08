@@ -52,9 +52,13 @@ export function Chart({ userId }: { userId: string }) {
             const parsedData = res.data.map((item: string) => JSON.parse(item)) // Parse serialized JSON strings
             const processedData = parsedData.map((item: { timestamp: string; sentiment?: { label: string; score: number }[] }) => ({
                 timestamp: item.timestamp, // Keep raw timestamp for filtering
-                displayTimestamp: new Date(item.timestamp).toLocaleDateString("en-US", {
+                displayTimestamp: new Date(item.timestamp).toLocaleString("en-US", {
                     month: "short",
                     day: "numeric",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: true,
                 }), // Format for display
                 positive: item.sentiment?.find((s) => s.label === "POSITIVE")?.score || 0,
                 negative: item.sentiment?.find((s) => s.label === "NEGATIVE")?.score || 0,
@@ -81,7 +85,7 @@ export function Chart({ userId }: { userId: string }) {
         return date >= startDate
     }).map((item) => ({
         ...item,
-        timestamp: item.timestamp, // Use formatted timestamp for display
+        timestamp: item.displayTimestamp, // Use formatted timestamp for display
     }))
 
     console.log("Filtered Data:", filteredData) // Debugging log
@@ -168,14 +172,14 @@ export function Chart({ userId }: { userId: string }) {
                             dataKey="positive"
                             type="natural"
                             fill="url(#fillPositive)"
-                            stroke="hsl(var(--chart-1))"
+                            stroke="hsl(var(--chart-2))"
                             stackId="a"
                         />
                         <Area
                             dataKey="negative"
                             type="natural"
                             fill="url(#fillNegative)"
-                            stroke="hsl(var(--chart-2))"
+                            stroke="hsl(var(--chart-1))"
                             stackId="a"
                         />
                         <ChartLegend content={<ChartLegendContent />} />

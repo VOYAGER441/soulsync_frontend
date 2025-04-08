@@ -28,7 +28,6 @@ import {
 import service from "@/service"
 import * as Interface from "@/interface/soul.interface"
 
-
 const chartConfig = {
     visitors: {
         label: "Visitors",
@@ -47,44 +46,40 @@ export function Chart({ userId }: { userId: string }) {
     const [timeRange, setTimeRange] = React.useState("90d")
     const [chartData, setChartData] = useState<Interface.ISentiment[]>([])
 
-
     useEffect(() => {
         const fetchData = async () => {
-            const res =await service.chatService.getSentiment(userId)
-
-            console.log("res", res.data);
-            setChartData(res.data)
-
-            
+            const res = await service.chatService.getSentiment(userId)
+            const processedData = res.data.map((item: { timestamp: string; sentiment: { label: string; score: number }[] }) => ({
+                timestamp: item.timestamp,
+                positive: item.sentiment.find((s) => s.label === "POSITIVE")?.score || 0,
+                negative: item.sentiment.find((s) => s.label === "NEGATIVE")?.score || 0,
+            }))
+            setChartData(processedData)
         }
         fetchData()
     }, [userId])
 
-
-
-
-
-      const filteredData = chartData.filter((item) => {
+    const filteredData = chartData.filter((item) => {
         const date = new Date(item.timestamp)
-        const referenceDate = new Date("2024-06-30")
+        const referenceDate = new Date()
         let daysToSubtract = 90
         if (timeRange === "30d") {
-          daysToSubtract = 30
+            daysToSubtract = 30
         } else if (timeRange === "7d") {
-          daysToSubtract = 7
+            daysToSubtract = 7
         }
         const startDate = new Date(referenceDate)
         startDate.setDate(startDate.getDate() - daysToSubtract)
         return date >= startDate
-      })
+    })
 
     return (
         <Card>
             <CardHeader className="flex items-center gap-2 space-y-0 border-b py-5 sm:flex-row">
                 <div className="grid flex-1 gap-1 text-center sm:text-left">
-                    <CardTitle>Area Chart - Interactive</CardTitle>
+                    <CardTitle>Sentiment Chart</CardTitle>
                     <CardDescription>
-                        Showing total visitors for the last 3 months
+                        Showing sentiment analysis for the selected time range
                     </CardDescription>
                 </div>
                 <Select value={timeRange} onValueChange={setTimeRange}>
@@ -114,34 +109,34 @@ export function Chart({ userId }: { userId: string }) {
                 >
                     <AreaChart data={filteredData}>
                         <defs>
-                            <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
+                            <linearGradient id="fillPositive" x1="0" y1="0" x2="0" y2="1">
                                 <stop
                                     offset="5%"
-                                    stopColor="var(--color-desktop)"
+                                    stopColor="hsl(var(--chart-1))"
                                     stopOpacity={0.8}
                                 />
                                 <stop
                                     offset="95%"
-                                    stopColor="var(--color-desktop)"
+                                    stopColor="hsl(var(--chart-1))"
                                     stopOpacity={0.1}
                                 />
                             </linearGradient>
-                            <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
+                            <linearGradient id="fillNegative" x1="0" y1="0" x2="0" y2="1">
                                 <stop
                                     offset="5%"
-                                    stopColor="var(--color-mobile)"
+                                    stopColor="hsl(var(--chart-2))"
                                     stopOpacity={0.8}
                                 />
                                 <stop
                                     offset="95%"
-                                    stopColor="var(--color-mobile)"
+                                    stopColor="hsl(var(--chart-2))"
                                     stopOpacity={0.1}
                                 />
                             </linearGradient>
                         </defs>
                         <CartesianGrid vertical={false} />
                         <XAxis
-                            dataKey="date"
+                            dataKey="timestamp"
                             tickLine={false}
                             axisLine={false}
                             tickMargin={8}
@@ -169,17 +164,17 @@ export function Chart({ userId }: { userId: string }) {
                             }
                         />
                         <Area
-                            dataKey="mobile"
+                            dataKey="positive"
                             type="natural"
-                            fill="url(#fillMobile)"
-                            stroke="var(--color-mobile)"
+                            fill="url(#fillPositive)"
+                            stroke="hsl(var(--chart-1))"
                             stackId="a"
                         />
                         <Area
-                            dataKey="desktop"
+                            dataKey="negative"
                             type="natural"
-                            fill="url(#fillDesktop)"
-                            stroke="var(--color-desktop)"
+                            fill="url(#fillNegative)"
+                            stroke="hsl(var(--chart-2))"
                             stackId="a"
                         />
                         <ChartLegend content={<ChartLegendContent />} />

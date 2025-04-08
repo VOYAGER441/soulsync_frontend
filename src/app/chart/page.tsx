@@ -1,6 +1,6 @@
 "use client"; // Ensures it's a client component
 
-import { Chart } from "@/components/sentimentChat";
+import { Chart } from "@/components/sentimentChart";
 import utils from "@/utils";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";

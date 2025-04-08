@@ -18,7 +18,7 @@ function ChartPage() {
     return (<div>
         
 
-        <Chart userId={decodedUserId} />;
+        <Chart userId={decodedUserId} />
 
     </div>)
 }

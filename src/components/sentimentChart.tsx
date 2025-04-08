@@ -172,14 +172,14 @@ export function Chart({ userId }: { userId: string }) {
                             dataKey="positive"
                             type="natural"
                             fill="url(#fillPositive)"
-                            stroke="hsl(var(--chart-2))"
+                            stroke="hsl(var(--chart-1))" // Corrected to match positive color
                             stackId="a"
                         />
                         <Area
                             dataKey="negative"
                             type="natural"
                             fill="url(#fillNegative)"
-                            stroke="hsl(var(--chart-1))"
+                            stroke="hsl(var(--chart-2))" // Corrected to match negative color
                             stackId="a"
                         />
                         <ChartLegend content={<ChartLegendContent />} />

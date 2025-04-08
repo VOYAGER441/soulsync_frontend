@@ -49,18 +49,26 @@ export function Chart({ userId }: { userId: string }) {
     useEffect(() => {
         const fetchData = async () => {
             const res = await service.chatService.getSentiment(userId)
-            const processedData = res.data.map((item: { timestamp: string; sentiment: { label: string; score: number }[] }) => ({
-                timestamp: item.timestamp,
-                positive: item.sentiment.find((s) => s.label === "POSITIVE")?.score || 0,
-                negative: item.sentiment.find((s) => s.label === "NEGATIVE")?.score || 0,
+            const parsedData = res.data.map((item: string) => JSON.parse(item)) // Parse serialized JSON strings
+            const processedData = parsedData.map((item: { timestamp: string; sentiment?: { label: string; score: number }[] }) => ({
+                timestamp: item.timestamp, // Keep raw timestamp for filtering
+                displayTimestamp: new Date(item.timestamp).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                }), // Format for display
+                positive: item.sentiment?.find((s) => s.label === "POSITIVE")?.score || 0,
+                negative: item.sentiment?.find((s) => s.label === "NEGATIVE")?.score || 0,
             }))
+            console.log("Processed Data:", processedData) // Debugging log
             setChartData(processedData)
         }
         fetchData()
     }, [userId])
 
+    console.log("Chart Data Timestamps:", chartData.map(item => item.timestamp)) // Debugging log for timestamps
+
     const filteredData = chartData.filter((item) => {
-        const date = new Date(item.timestamp)
+        const date = new Date(item.timestamp) // Use raw timestamp for filtering
         const referenceDate = new Date()
         let daysToSubtract = 90
         if (timeRange === "30d") {
@@ -71,7 +79,12 @@ export function Chart({ userId }: { userId: string }) {
         const startDate = new Date(referenceDate)
         startDate.setDate(startDate.getDate() - daysToSubtract)
         return date >= startDate
-    })
+    }).map((item) => ({
+        ...item,
+        timestamp: item.timestamp, // Use formatted timestamp for display
+    }))
+
+    console.log("Filtered Data:", filteredData) // Debugging log
 
     return (
         <Card>
@@ -141,24 +154,12 @@ export function Chart({ userId }: { userId: string }) {
                             axisLine={false}
                             tickMargin={8}
                             minTickGap={32}
-                            tickFormatter={(value) => {
-                                const date = new Date(value)
-                                return date.toLocaleDateString("en-US", {
-                                    month: "short",
-                                    day: "numeric",
-                                })
-                            }}
                         />
                         <ChartTooltip
                             cursor={false}
                             content={
                                 <ChartTooltipContent
-                                    labelFormatter={(value) => {
-                                        return new Date(value).toLocaleDateString("en-US", {
-                                            month: "short",
-                                            day: "numeric",
-                                        })
-                                    }}
+                                    labelFormatter={(value) => value}
                                     indicator="dot"
                                 />
                             }

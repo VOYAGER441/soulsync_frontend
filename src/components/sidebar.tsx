@@ -83,9 +83,7 @@ export function AppSidebar({ isLoading = false, onNavigate }: SidebarProps) {
                                 </>
                             ) : (
                                 // Actual navigation items
-                                <div className="flex flex-col gap-2 items-center  
-                                self-center h-screen justify-center">
-                                    
+                                <div className="flex flex-col gap-2 items-center justify-center ">
                                     {navItems.map((item) => (
                                         <SidebarMenuItem key={item.title}>
                                             <SidebarMenuButton

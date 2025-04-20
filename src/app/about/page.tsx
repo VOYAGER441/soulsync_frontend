@@ -15,7 +15,7 @@ export default function AboutPage() {
       {/* Header */}
       <header className="sticky top-0 z-50 w-full  border-b bg-background/95 backdrop-blur">
         <div className="container flex h-14 items-center justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2" onClick={()=>window.location.href="/"}>
             <Image src="/assets/logo1.webp" alt="SoulSync Logo" width={40} height={40} />
             <span className="text-xl font-bold">SoulSync</span>
           </div>
@@ -97,8 +97,8 @@ export default function AboutPage() {
       {/* Footer */}
       <footer className="border-t">
         <div className="container py-8">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
+          <div className="flex justify-center items-center flex-wrap gap-4">
+            <div className="flex items-center gap-2" onClick={()=>window.location.href="/"}>
               <Image src="/assets/logo1.webp" alt="SoulSync Logo" width={32} height={32} />
               <span className="font-semibold">SoulSync</span>
             </div>

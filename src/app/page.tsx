@@ -27,7 +27,7 @@ export default function Home() {
               Start Your Healing Journey →
             </Button>
           </Link>
-          <Link href="/about">
+          <Link href="/seo">
             <Button className="bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg text-sm font-medium shadow-md w-full sm:w-auto" >
               Learn More →
             </Button>

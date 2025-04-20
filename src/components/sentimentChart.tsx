@@ -63,13 +63,13 @@ export function Chart({ userId }: { userId: string }) {
                 positive: item.sentiment?.find((s) => s.label === "POSITIVE")?.score || 0,
                 negative: item.sentiment?.find((s) => s.label === "NEGATIVE")?.score || 0,
             }))
-            console.log("Processed Data:", processedData) // Debugging log
+            // console.log("Processed Data:", processedData) // Debugging log
             setChartData(processedData)
         }
         fetchData()
     }, [userId])
 
-    console.log("Chart Data Timestamps:", chartData.map(item => item.timestamp)) // Debugging log for timestamps
+    // console.log("Chart Data Timestamps:", chartData.map(item => item.timestamp)) // Debugging log for timestamps
 
     const filteredData = chartData.filter((item) => {
         const date = new Date(item.timestamp) // Use raw timestamp for filtering
@@ -88,7 +88,7 @@ export function Chart({ userId }: { userId: string }) {
         timestamp: item.displayTimestamp, // Use formatted timestamp for display
     }))
 
-    console.log("Filtered Data:", filteredData) // Debugging log
+    // console.log("Filtered Data:", filteredData) // Debugging log
 
     return (
         <Card>

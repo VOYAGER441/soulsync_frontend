@@ -5,21 +5,20 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
 
 export default function ContactPage() {
     return (
-        <SidebarProvider>
+        
             <div className="min-h-screen bg-background text-foreground">
                 {/* Header */}
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
                         <div className="container flex h-14 items-center justify-between">
                             <div className="flex items-center gap-2" >
-                                <SidebarTrigger />
+                                
                                 <Image src="/assets/logo1.webp" alt="SoulSync Logo" width={40} height={40} />
                                 <span className="text-xl font-bold">SoulSync</span>
                             </div>
@@ -110,6 +109,6 @@ export default function ContactPage() {
                     </footer>
                 </div>
             </div>
-        </SidebarProvider>
+        
     );
 }

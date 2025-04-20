@@ -15,8 +15,8 @@ function ChatPageContent() {
   const decodedChatId = utils.decodeData(chatIdParam);
   const decodedUserId = utils.decodeData(userIdParam);
 
-  console.log("Decoded Chat ID:", decodedChatId);
-  console.log("Decoded User ID:", decodedUserId);
+  // console.log("Decoded Chat ID:", decodedChatId);
+  // console.log("Decoded User ID:", decodedUserId);
 
   return <ChatDetails chatId={decodedChatId} userId={decodedUserId} />;
 }

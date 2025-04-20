@@ -1,7 +1,8 @@
 "use client"
 
 import { AppSidebar } from "@/components/sidebar"
-import { SidebarInset } from "@/components/ui/sidebar"
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import { useIsMobile } from "@/hooks/use-mobile"
 import { useState } from "react"
 import AboutPage from "../about/page"
 import ContactPage from "../contact/page"
@@ -10,12 +11,9 @@ import PrivacyPage from "../privacy/page"
 import TermsPage from "../terms/page"
 import UpgradePage from "../upgrade/page"
 
-
 export default function SEO() {
-
     const [selectedPage, setSelectedPage] = useState<string>("about")
-
-
+    const isMobile = useIsMobile()
 
     const renderContent = () => {
         switch (selectedPage) {
@@ -37,25 +35,22 @@ export default function SEO() {
     }
 
     return (
-        
+        <div className="h-screen flex flex-col">
+            <SidebarProvider>
 
-            <div className="h-screen flex flex-col">
-                
-                    <AppSidebar
-
-                        onNavigate={(path: string) => {
-                            const page = path.replace("/", "")
-                            setSelectedPage(page)
-                        }}
-                    />
-                    <SidebarInset className="h-screen flex-1 overflow-hidden">
-
-                        <main className="h-screen overflow-auto">
-                            {renderContent()}
-                        </main>
-                    </SidebarInset>
-                
-            </div>
-        
+                <AppSidebar
+                    isMobile={isMobile}
+                    onNavigate={(path: string) => {
+                        const page = path.replace("/", "")
+                        setSelectedPage(page)
+                    }}
+                />
+                <SidebarInset className={`h-screen flex-1 overflow-hidden ${isMobile ? 'mt-14' : ''}`}>
+                    <main className="h-screen overflow-auto">
+                        {renderContent()}
+                    </main>
+                </SidebarInset>
+            </SidebarProvider>
+        </div>
     )
 }

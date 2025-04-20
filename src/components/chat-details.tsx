@@ -73,7 +73,7 @@ export function ChatDetails({ chatId, userId }: ChatDetailsProps) {
   return (
     <div className="flex justify-center p-4">
       <div className="w-full max-w-8xl  rounded-2xl shadow-lg p-6 space-y-6">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center flex-wrap mb-4">
           <h2 className="text-xl font-semibold ">Chat Report</h2>
           <div className="flex items-center justify-between px-4">
             <div className="flex items-center gap-2" onClick={() => window.location.href = "/dashboard"}>

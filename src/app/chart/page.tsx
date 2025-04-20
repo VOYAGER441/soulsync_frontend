@@ -12,7 +12,7 @@ function ChartPage() {
     const userIdParam = searchParams.get("u") || "";
     const decodedUserId = utils.decodeData(userIdParam);
 
-    console.log("Decoded User ID:", decodedUserId);
+    // console.log("Decoded User ID:", decodedUserId);
 
     return (
         <div className="flex min-h-screen items-center justify-center p-2 sm:p-4 bg-background">

@@ -4,13 +4,12 @@ import { ModeToggle } from "@/components/ModeToggle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function AboutPage() {
   return (
-    <SidebarProvider>
+    // <SidebarProvider>
       <div className="min-h-screen bg-background text-foreground">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -18,7 +17,7 @@ export default function AboutPage() {
           <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
             <div className="container flex h-14 items-center justify-between">
               <div className="flex items-center gap-2">
-                <SidebarTrigger />
+                {/* <SidebarTrigger /> */}
                 {/* <Toggle/> */}
                 <Image src="/assets/logo1.webp" alt="SoulSync Logo" width={40} height={40} />
                 <span className="text-xl font-bold">SoulSync</span>
@@ -114,6 +113,6 @@ export default function AboutPage() {
           </footer>
         </div>
       </div>
-     </SidebarProvider>
+    //  </SidebarProvider>
   );
 }

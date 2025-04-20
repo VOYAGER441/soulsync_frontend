@@ -37,11 +37,7 @@ export function AppSidebar({ isLoading = false, onNavigate }: SidebarProps) {
 
     // Sample navigation data
     const navItems: NavItem[] = [
-        {
-            title: "Home",
-            href: "/",
-            isActive: pathname === "/home",
-        },
+
         {
             title: "About us",
             href: "/about",
@@ -67,7 +63,7 @@ export function AppSidebar({ isLoading = false, onNavigate }: SidebarProps) {
     return (
         <Sidebar className="border-r border-border bg-black">
             <SidebarHeader className="p-4">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2" onClick={() => window.location.href = "/"}>
                     <Image src={"/assets/logo1.webp"} alt={"logo"} width={25} height={25} />
                     <span className="text-lg font-bold">SoulSync</span>
                 </div>
@@ -87,7 +83,9 @@ export function AppSidebar({ isLoading = false, onNavigate }: SidebarProps) {
                                 </>
                             ) : (
                                 // Actual navigation items
-                                <>
+                                <div className="flex flex-col gap-2 items-center  
+                                self-center h-screen justify-center">
+                                    
                                     {navItems.map((item) => (
                                         <SidebarMenuItem key={item.title}>
                                             <SidebarMenuButton
@@ -99,14 +97,14 @@ export function AppSidebar({ isLoading = false, onNavigate }: SidebarProps) {
                                             </SidebarMenuButton>
                                         </SidebarMenuItem>
                                     ))}
-                                </>
+                                </div>
                             )}
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
             <SidebarRail />
-            
+
         </Sidebar>
     )
 }

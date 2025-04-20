@@ -30,21 +30,7 @@ export default function Home() {
               </Button>
             </div>
           </header>
-          <main className="container py-10">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tight">Company</h2>
-              <h1 className="text-6xl font-bold tracking-tight">About</h1>
-            </div>
-            <div className="mt-8 max-w-2xl">
-              <p className="text-lg text-white/80">
-                OpenAI is an AI research and deployment company. Our mission is to ensure that artificial general
-                intelligence benefits all of humanity.
-              </p>
-            </div>
-            <div className="mt-12 aspect-video w-full rounded-lg bg-zinc-800/50">
-              {/* Placeholder for image content */}
-            </div>
-          </main>
+        
         </SidebarInset>
       </SidebarProvider>
     </div>

@@ -16,6 +16,7 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { Folder } from "lucide-react"
 
 interface NavItem {
   title: string
@@ -44,56 +45,21 @@ export function AppSidebar({ isLoading = false }: SidebarProps) {
       isActive: pathname === "/about",
     },
     {
-      title: "Our Charter",
-      href: "/charter",
-      isActive: pathname === "/charter",
+      title: "Contact Us",
+      href: "/contact",
+      isActive: pathname === "/contact",
     },
     {
-      title: "Careers",
-      href: "/careers",
-      isActive: pathname === "/careers",
+      title: "Privacy Policy",
+      href: "/privacy",
+      isActive: pathname === "/privacy",
     },
     {
-      title: "Brand",
-      href: "#",
-      items: [
-        {
-          title: "Overview",
-          href: "/brand/overview",
-          isActive: pathname === "/brand/overview",
-        },
-        {
-          title: "Logos",
-          href: "/brand/logos",
-          isActive: pathname === "/brand/logos",
-        },
-        {
-          title: "Gallery",
-          href: "/brand/gallery",
-          isActive: pathname === "/brand/gallery",
-        },
-        {
-          title: "Partnerships",
-          href: "/brand/partnerships",
-          isActive: pathname === "/brand/partnerships",
-        },
-        {
-          title: "Typography",
-          href: "/brand/typography",
-          isActive: pathname === "/brand/typography",
-        },
-        {
-          title: "Language",
-          href: "/brand/language",
-          isActive: pathname === "/brand/language",
-        },
-        {
-          title: "Contact",
-          href: "/brand/contact",
-          isActive: pathname === "/brand/contact",
-        },
-      ],
+      title: "Terms & Conditions",
+      href: "/terms",
+      isActive: pathname === "/terms",
     },
+    
   ]
 
   return (
@@ -128,11 +94,12 @@ export function AppSidebar({ isLoading = false }: SidebarProps) {
                 // Actual navigation items
                 <>
                   {navItems.map((item) => (
-                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuItem key={item.title}>
                       {item.items ? (
-                        // Item with sub-items
-                        <>
+                          // Item with sub-items
+                          <>
                           <SidebarMenuButton asChild isActive={item.isActive} className="font-medium">
+                          <Folder />
                             <span>{item.title}</span>
                           </SidebarMenuButton>
                           <SidebarMenuSub>

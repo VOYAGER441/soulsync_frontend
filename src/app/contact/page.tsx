@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import Image from "next/image";
 import Link from "next/link";
 import { ModeToggle } from "@/components/ModeToggle";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function ContactPage() {
     return (
@@ -16,7 +17,8 @@ export default function ContactPage() {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
                     <div className="container flex h-14 items-center justify-between">
-                        <div className="flex items-center gap-2" onClick={()=>window.location.href="/"}>
+                        <div className="flex items-center gap-2" >
+                        <SidebarTrigger />
                             <Image src="/assets/logo1.webp" alt="SoulSync Logo" width={40} height={40} />
                             <span className="text-xl font-bold">SoulSync</span>
                         </div>
@@ -43,7 +45,7 @@ export default function ContactPage() {
                                     </div>
 
                                     <form
-                                        action={`${process.env.NEXT_PUBLIC_CONTACT_FORM_URL}`} // <-- Replace with your actual Form ID
+                                        action={`${process.env.NEXT_PUBLIC_CONTACT_FORM_URL}`} 
                                         method="POST"
                                         onSubmit={() => toast.success("Message sent successfully!")}
                                         className="space-y-6"

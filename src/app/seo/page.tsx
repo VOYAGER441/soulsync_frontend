@@ -1,36 +1,52 @@
 "use client"
 
-import { useState } from "react"
 import { AppSidebar } from "@/components/sidebar"
-import { Button } from "@/components/ui/button"
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import { useState } from "react"
+import AboutPage from "../about/page"
+import PrivacyPage from "../privacy/page"
+import TermsPage from "../terms/page"
+import ContactPage from "../contact/page"
+import Home   from "../page"
 
-export default function Home() {
-  const [isLoading, setIsLoading] = useState(false)
+export default function SEO() {
+  
+  const [selectedPage, setSelectedPage] = useState<string>("about")
 
-  const toggleLoading = () => {
-    setIsLoading((prev) => !prev)
+ 
+
+  const renderContent = () => {
+    switch (selectedPage) {
+      case "/":
+        return <Home />
+      case "about":
+        return <AboutPage />
+      case "contact":
+        return <ContactPage />
+      case "privacy":
+        return <PrivacyPage />
+      case "terms":
+        return <TermsPage />
+      default:
+        return <AboutPage />
+    }
   }
 
   return (
     <div className="bg-black min-h-screen text-white">
       <SidebarProvider>
-        <AppSidebar isLoading={isLoading} />
+        <AppSidebar 
+          
+          onNavigate={(path: string) => {
+            const page = path.replace("/", "")
+            setSelectedPage(page)
+          }}
+        />
         <SidebarInset className="bg-black">
-          <header className="flex h-16 items-center gap-4 border-b border-border px-6">
-            <SidebarTrigger />
-            <h1 className="text-lg font-semibold">OpenAI</h1>
-            <div className="ml-auto">
-              <Button
-                variant="outline"
-                onClick={toggleLoading}
-                className="text-white border-white/20 hover:bg-white/10"
-              >
-                {isLoading ? "Show Content" : "Show Skeleton"}
-              </Button>
-            </div>
-          </header>
         
+          <main className="h-[calc(100vh-4rem)] overflow-auto">
+            {renderContent()}
+          </main>
         </SidebarInset>
       </SidebarProvider>
     </div>

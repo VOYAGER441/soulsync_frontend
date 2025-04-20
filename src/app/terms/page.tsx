@@ -5,140 +5,142 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ModeToggle";
 import { Separator } from "@/components/ui/separator";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function TermsPage() {
-  return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
-          <div className="container flex h-14 items-center justify-between">
-            <div className="flex items-center gap-2" onClick={()=>window.location.href="/"}>
-              <Image src="/assets/logo1.webp" alt="SoulSync Logo" width={40} height={40} />
-              <span className="text-xl font-bold">SoulSync</span>
+    return (
+        <div className="min-h-screen bg-background text-foreground">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                {/* Header */}
+                <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
+                    <div className="container flex h-14 items-center justify-between">
+                        <div className="flex items-center gap-2" >
+                            <SidebarTrigger />
+                            <Image src="/assets/logo1.webp" alt="SoulSync Logo" width={40} height={40} />
+                            <span className="text-xl font-bold">SoulSync</span>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <ModeToggle />
+                            <Link href="/login">
+                                <Button>Get Started</Button>
+                            </Link>
+                        </div>
+                    </div>
+                </header>
+
+                {/* Main Content */}
+                <main className="container py-12 max-w-4xl mx-auto">
+                    <h1 className="text-3xl font-bold mb-8">Terms and Conditions</h1>
+                    <p className="text-muted-foreground mb-6">Last updated: April 20, 2025</p>
+
+                    <section className="space-y-6">
+                        <div>
+                            <h2 className="text-2xl font-semibold mb-4">1. Acceptance of Terms</h2>
+                            <p className="text-muted-foreground">
+                                By accessing or using SoulSync, you agree to be bound by these Terms and Conditions. If you do not agree to all the terms and conditions, you must not access or use our services.
+                            </p>
+                        </div>
+
+                        <Separator />
+
+                        <div>
+                            <h2 className="text-2xl font-semibold mb-4">2. Services Description</h2>
+                            <p className="text-muted-foreground mb-4">
+                                SoulSync is an AI-powered emotional well-being platform that provides:
+                            </p>
+                            <ul className="list-disc pl-6 text-muted-foreground space-y-2">
+                                <li>AI-driven emotional support conversations</li>
+                                <li>Sentiment analysis and mood tracking</li>
+                                <li>Personal growth insights and recommendations</li>
+                                <li>Secure chat history storage</li>
+                            </ul>
+                        </div>
+
+                        <Separator />
+
+                        <div>
+                            <h2 className="text-2xl font-semibold mb-4">3. User Responsibilities</h2>
+                            <p className="text-muted-foreground mb-4">You agree to:</p>
+                            <ul className="list-disc pl-6 text-muted-foreground space-y-2">
+                                <li>Provide accurate and complete registration information</li>
+                                <li>Maintain the security of your account credentials</li>
+                                <li>Use the services in a manner consistent with applicable laws and regulations</li>
+                                <li>Not misuse or abuse the AI system or other users</li>
+                                <li>Not use the service for emergency mental health situations</li>
+                            </ul>
+                        </div>
+
+                        <Separator />
+
+                        <div>
+                            <h2 className="text-2xl font-semibold mb-4">4. AI Interaction Disclaimer</h2>
+                            <p className="text-muted-foreground mb-4">
+                                While our AI system is designed to provide emotional support, please understand that:
+                            </p>
+                            <ul className="list-disc pl-6 text-muted-foreground space-y-2">
+                                <li>It is not a replacement for professional mental health services</li>
+                                <li>Responses are generated by artificial intelligence</li>
+                                <li>In case of emergency, seek immediate professional help</li>
+                                <li>The AI`s advice should not be considered medical or professional counsel</li>
+                            </ul>
+                        </div>
+
+                        <Separator />
+
+                        <div>
+                            <h2 className="text-2xl font-semibold mb-4">5. Privacy and Data Usage</h2>
+                            <p className="text-muted-foreground mb-4">
+                                Your use of SoulSync is also governed by our Privacy Policy. By using our services, you consent to our data practices as described in our Privacy Policy.
+                            </p>
+                        </div>
+
+                        <Separator />
+
+                        <div>
+                            <h2 className="text-2xl font-semibold mb-4">6. Intellectual Property</h2>
+                            <p className="text-muted-foreground mb-4">
+                                All content, features, and functionality of SoulSync, including but not limited to the AI system, design, and code, are owned by SoulSync and are protected by intellectual property laws.
+                            </p>
+                        </div>
+
+                        <Separator />
+
+                        <div>
+                            <h2 className="text-2xl font-semibold mb-4">7. Termination</h2>
+                            <p className="text-muted-foreground mb-4">
+                                We reserve the right to terminate or suspend your account and access to our services at our sole discretion, without prior notice, for conduct that we believe violates these Terms or is harmful to other users, us, or third parties, or for any other reason.
+                            </p>
+                        </div>
+
+                        <Separator />
+
+                        <div>
+                            <h2 className="text-2xl font-semibold mb-4">8. Contact Information</h2>
+                            <p className="text-muted-foreground">
+                                For any questions about these Terms and Conditions, please contact us at:{" "}
+                                <a href="mailto:voyagerwebteams@gmail.com" className="text-primary hover:underline">
+                                    voyagerwebteams@gmail.com
+                                </a>
+                            </p>
+                        </div>
+                    </section>
+                </main>
+
+                {/* Footer */}
+                <footer className="border-t mt-12">
+                    <div className="container py-8">
+                        <div className="flex justify-center items-center flex-wrap gap-4">
+                            <div className="flex items-center gap-2" onClick={() => window.location.href = "/"}>
+                                <Image src="/assets/logo1.webp" alt="SoulSync Logo" width={32} height={32} />
+                                <span className="font-semibold">SoulSync</span>
+                            </div>
+                            <p className="text-sm text-muted-foreground">
+                                © 2025 SoulSync. All rights reserved.
+                            </p>
+                        </div>
+                    </div>
+                </footer>
             </div>
-            <div className="flex items-center gap-4">
-              <ModeToggle />
-              <Link href="/login">
-                <Button>Get Started</Button>
-              </Link>
-            </div>
-          </div>
-        </header>
-
-        {/* Main Content */}
-        <main className="container py-12 max-w-4xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8">Terms and Conditions</h1>
-          <p className="text-muted-foreground mb-6">Last updated: April 20, 2025</p>
-
-          <section className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-semibold mb-4">1. Acceptance of Terms</h2>
-              <p className="text-muted-foreground">
-                By accessing or using SoulSync, you agree to be bound by these Terms and Conditions. If you do not agree to all the terms and conditions, you must not access or use our services.
-              </p>
-            </div>
-
-            <Separator />
-
-            <div>
-              <h2 className="text-2xl font-semibold mb-4">2. Services Description</h2>
-              <p className="text-muted-foreground mb-4">
-                SoulSync is an AI-powered emotional well-being platform that provides:
-              </p>
-              <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-                <li>AI-driven emotional support conversations</li>
-                <li>Sentiment analysis and mood tracking</li>
-                <li>Personal growth insights and recommendations</li>
-                <li>Secure chat history storage</li>
-              </ul>
-            </div>
-
-            <Separator />
-
-            <div>
-              <h2 className="text-2xl font-semibold mb-4">3. User Responsibilities</h2>
-              <p className="text-muted-foreground mb-4">You agree to:</p>
-              <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-                <li>Provide accurate and complete registration information</li>
-                <li>Maintain the security of your account credentials</li>
-                <li>Use the services in a manner consistent with applicable laws and regulations</li>
-                <li>Not misuse or abuse the AI system or other users</li>
-                <li>Not use the service for emergency mental health situations</li>
-              </ul>
-            </div>
-
-            <Separator />
-
-            <div>
-              <h2 className="text-2xl font-semibold mb-4">4. AI Interaction Disclaimer</h2>
-              <p className="text-muted-foreground mb-4">
-                While our AI system is designed to provide emotional support, please understand that:
-              </p>
-              <ul className="list-disc pl-6 text-muted-foreground space-y-2">
-                <li>It is not a replacement for professional mental health services</li>
-                <li>Responses are generated by artificial intelligence</li>
-                <li>In case of emergency, seek immediate professional help</li>
-                <li>The AI`s advice should not be considered medical or professional counsel</li>
-              </ul>
-            </div>
-
-            <Separator />
-
-            <div>
-              <h2 className="text-2xl font-semibold mb-4">5. Privacy and Data Usage</h2>
-              <p className="text-muted-foreground mb-4">
-                Your use of SoulSync is also governed by our Privacy Policy. By using our services, you consent to our data practices as described in our Privacy Policy.
-              </p>
-            </div>
-
-            <Separator />
-
-            <div>
-              <h2 className="text-2xl font-semibold mb-4">6. Intellectual Property</h2>
-              <p className="text-muted-foreground mb-4">
-                All content, features, and functionality of SoulSync, including but not limited to the AI system, design, and code, are owned by SoulSync and are protected by intellectual property laws.
-              </p>
-            </div>
-
-            <Separator />
-
-            <div>
-              <h2 className="text-2xl font-semibold mb-4">7. Termination</h2>
-              <p className="text-muted-foreground mb-4">
-                We reserve the right to terminate or suspend your account and access to our services at our sole discretion, without prior notice, for conduct that we believe violates these Terms or is harmful to other users, us, or third parties, or for any other reason.
-              </p>
-            </div>
-
-            <Separator />
-
-            <div>
-              <h2 className="text-2xl font-semibold mb-4">8. Contact Information</h2>
-              <p className="text-muted-foreground">
-                For any questions about these Terms and Conditions, please contact us at:{" "}
-                <a href="mailto:voyagerwebteams@gmail.com" className="text-primary hover:underline">
-                  voyagerwebteams@gmail.com
-                </a>
-              </p>
-            </div>
-          </section>
-        </main>
-
-        {/* Footer */}
-        <footer className="border-t mt-12">
-          <div className="container py-8">
-            <div className="flex justify-center items-center flex-wrap gap-4">
-              <div className="flex items-center gap-2" onClick={()=>window.location.href="/"}>
-                <Image src="/assets/logo1.webp" alt="SoulSync Logo" width={32} height={32} />
-                <span className="font-semibold">SoulSync</span>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                © 2025 SoulSync. All rights reserved.
-              </p>
-            </div>
-          </div>
-        </footer>
-      </div>
-    </div>
-  );
+        </div>
+    );
 }

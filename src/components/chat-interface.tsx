@@ -136,6 +136,15 @@ export default function ChatPageContent({ userId }: { userId: string }) {
               <div className={`rounded-xl p-3 ${message.sender === "user" ? "bg-blue-600 text-white" : "bg-gray-800"}`}>
                 {message.sender === "ai" ? (
                   <>
+                    {message.sentiment && (
+                      <SentimentChart
+                        sentiment={message.sentiment}
+                        sentimentScore={message.sentimentScore}
+                      />
+                    )}
+                    <p className="font-bold">SoulSync AI reply according to your sentiment:</p>
+                    <br></br>
+
                     <ReactMarkdown
                       components={{
                         p: (props) => <p className="text-sm md:text-base whitespace-pre-wrap" {...props} />,
@@ -144,12 +153,7 @@ export default function ChatPageContent({ userId }: { userId: string }) {
                       {message.content}
                     </ReactMarkdown>
 
-                    {message.sentiment && (
-                      <SentimentChart
-                        sentiment={message.sentiment}
-                        sentimentScore={message.sentimentScore}
-                      />
-                    )}
+
                   </>
                 ) : (
                   <p className="text-sm md:text-base">{message.content}</p>
@@ -185,7 +189,7 @@ export default function ChatPageContent({ userId }: { userId: string }) {
               <Image src="/assets/logo1.webp" alt="AI" width={32} height={32} />
             </Avatar>
             <div className="bg-gray-800 rounded-xl p-3 flex items-center">
-              <span className="text-gray-500 italic">Typing...</span>
+              <span className="text-gray-500 italic">Thinking...</span>
               <div className="animate-spin border-t-2 border-gray-400 rounded-full h-4 w-4 ml-2"></div>
             </div>
           </div>

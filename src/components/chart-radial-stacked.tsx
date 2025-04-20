@@ -53,8 +53,8 @@ export function SentimentChart({ sentiment, sentimentScore }: SentimentChartProp
               }}
             />
           </PolarRadiusAxis>
-          <RadialBar dataKey="positive" stackId="a" cornerRadius={2} fill="var(--color-positive)" className="stroke-transparent" />
-          <RadialBar dataKey="negative" fill="var(--color-negative)" stackId="a" cornerRadius={2} className="stroke-transparent" />
+          <RadialBar dataKey="positive" stackId="a" cornerRadius={2} fill="hsl(142, 76%, 36%)" className="stroke-transparent" />
+          <RadialBar dataKey="negative" fill="hsl(0, 84%, 60%)" stackId="a" cornerRadius={2} className="stroke-transparent" />
         </RadialBarChart>
       </ChartContainer>
       <div className="text-xs ml-1 text-white">

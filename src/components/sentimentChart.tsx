@@ -34,11 +34,11 @@ const chartConfig = {
     },
     positive: {
         label: "Positive",
-        color: "hsl(var(--chart-1))",
+        color: "hsl(142, 76%, 36%)", // Green color for positive sentiment
     },
     negative: {
         label: "Negative",
-        color: "hsl(var(--chart-2))",
+        color: "hsl(0, 84%, 60%)", // Red color for negative sentiment
     },
 } satisfies ChartConfig
 
@@ -129,25 +129,25 @@ export function Chart({ userId }: { userId: string }) {
                             <linearGradient id="fillPositive" x1="0" y1="0" x2="0" y2="1">
                                 <stop
                                     offset="5%"
-                                    stopColor="var(--color-positive)"
-                                    stopOpacity={0.8}
+                                    stopColor="hsl(142, 76%, 36%)"
+                                    stopOpacity={0.3}
                                 />
                                 <stop
                                     offset="95%"
-                                    stopColor="var(--color-positive)"
-                                    stopOpacity={0.1}
+                                    stopColor="hsl(142, 76%, 36%)"
+                                    stopOpacity={0.05}
                                 />
                             </linearGradient>
                             <linearGradient id="fillNegative" x1="0" y1="0" x2="0" y2="1">
                                 <stop
                                     offset="5%"
-                                    stopColor="var(--color-negative)"
-                                    stopOpacity={0.8}
+                                    stopColor="hsl(0, 84%, 60%)"
+                                    stopOpacity={0.3}
                                 />
                                 <stop
                                     offset="95%"
-                                    stopColor="var(--color-negative)"
-                                    stopOpacity={0.1}
+                                    stopColor="hsl(0, 84%, 60%)"
+                                    stopOpacity={0.05}
                                 />
                             </linearGradient>
                         </defs>
@@ -172,14 +172,14 @@ export function Chart({ userId }: { userId: string }) {
                             dataKey="positive"
                             type="natural"
                             fill="url(#fillPositive)"
-                            stroke="var(--color-positive)" // Corrected to match positive color
+                            stroke="hsl(142, 76%, 36%)" // Green color for positive sentiment
                             stackId="a"
                         />
                         <Area
                             dataKey="negative"
                             type="natural"
                             fill="url(#fillNegative)"
-                            stroke="var(--color-negative)" // Corrected to match negative color
+                            stroke="hsl(0, 84%, 60%)" // Red color for negative sentiment
                             stackId="a"
                         />
                         <ChartLegend content={<ChartLegendContent />} />

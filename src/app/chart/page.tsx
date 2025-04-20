@@ -14,17 +14,17 @@ function ChartPage() {
     console.log("Decoded User ID:", decodedUserId);
 
     return (
-        <div className="flex min-h-screen items-center justify-center p-4 bg-background">
-            <div className="w-full ">
-                <div className="bg-card text-card-foreground rounded-xl border shadow-lg p-6 space-y-6">
-                    <div className="flex items-center justify-between sm:flex-wrap">
-                        <h1 className="text-3xl font-bold">Sentiment Analysis</h1>
-                        <div className="flex items-center">
-                            <Image src="/assets/logo1.webp" alt="logo" width={40} height={40} />
-                            <span className="text-lg font-bold">SoulSync</span>
+        <div className="flex min-h-screen items-center justify-center p-2 sm:p-4 bg-background">
+            <div className="w-full max-w-[95vw] sm:max-w-[90vw] lg:max-w-[80vw]">
+                <div className="bg-card text-card-foreground rounded-xl border shadow-lg p-3 sm:p-6 space-y-4 sm:space-y-6">
+                    <div className="flex flex-col sm:flex-row items-center gap-4 sm:justify-between">
+                        <h1 className="text-2xl sm:text-3xl font-bold">Sentiment Analysis</h1>
+                        <div className="flex items-center gap-2">
+                            <Image src="/assets/logo1.webp" alt="logo" width={32} height={32} className="sm:w-[40px] sm:h-[40px]" />
+                            <span className="text-base sm:text-lg font-bold">SoulSync</span>
                         </div>
                     </div>
-                    <div className="bg-black/5 dark:bg-white/5 rounded-lg p-4">
+                    <div className="bg-black/5 dark:bg-white/5 rounded-lg p-2 sm:p-4">
                         <Chart userId={decodedUserId} />
                     </div>
                 </div>

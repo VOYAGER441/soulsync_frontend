@@ -8,6 +8,7 @@ import { SentimentChart } from "./chart-radial-stacked";
 import * as Interface from "@/interface/soul.interface";
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
+import { ModeToggle } from "./ModeToggle";
 
 interface ChatDetailsProps {
   chatId: string;
@@ -71,9 +72,9 @@ export function ChatDetails({ chatId, userId }: ChatDetailsProps) {
 
   return (
     <div className="flex justify-center p-4">
-      <div className="w-full max-w-8xl bg-[#1f1f1f] rounded-2xl shadow-lg p-6 space-y-6">
+      <div className="w-full max-w-8xl  rounded-2xl shadow-lg p-6 space-y-6">
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-semibold text-white">Chat Report</h2>
+          <h2 className="text-xl font-semibold ">Chat Report</h2>
           <div className="flex items-center justify-between px-4">
             <div className="flex items-center gap-2" onClick={() => window.location.href = "/dashboard"}>
               <Image src="/assets/logo1.webp" alt="logo" width={40} height={40} />
@@ -85,16 +86,17 @@ export function ChatDetails({ chatId, userId }: ChatDetailsProps) {
               {sentimentEmoji} {sentiment.charAt(0).toUpperCase() + sentiment.slice(1)}
             </span>
           )}
+          <ModeToggle />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-gray-800 rounded-xl p-4 overflow-hidden">
-            <p className="text-sm md:text-base text-white whitespace-pre-wrap">
+          <div className="bg-gray-500 rounded-xl p-4 overflow-hidden">
+            <p className="text-sm md:text-base  whitespace-pre-wrap">
               <strong className="text-gray-400">Message:</strong><br />{chat.message}
             </p>
             {chat.sentiment && (
               <div className="mt-4 w-full flex flex-col items-center bg-gray-700 rounded-lg p-4">
-                <h3 className="text-white font-medium mb-4 text-center">Sentiment Breakdown</h3>
+                <h3 className=" font-medium mb-4 text-center">Sentiment Breakdown</h3>
                 <div className="">
                   <SentimentChart
                     sentiment={chat.sentiment.find(s => s.label === "POSITIVE") ? "POSITIVE" : chat.sentiment[0].label}

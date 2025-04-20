@@ -1,14 +1,14 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { ModeToggle } from "@/components/ModeToggle";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import Image from "next/image";
 import Link from "next/link";
-import { ModeToggle } from "@/components/ModeToggle";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { toast } from "sonner";
 
 export default function ContactPage() {
     return (
@@ -19,7 +19,7 @@ export default function ContactPage() {
                     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
                         <div className="container flex h-14 items-center justify-between">
                             <div className="flex items-center gap-2" >
-                                <SidebarTrigger />
+                                {/* <SidebarTrigger /> */}
                                 <Image src="/assets/logo1.webp" alt="SoulSync Logo" width={40} height={40} />
                                 <span className="text-xl font-bold">SoulSync</span>
                             </div>
@@ -33,7 +33,7 @@ export default function ContactPage() {
                     </header>
 
                     <div className="container mx-auto px-4 py-12">
-                        <div className="max-w-2xl mx-auto">
+                        <div className=" mx-auto">
                             <Card className="overflow-hidden">
                                 <CardContent className="p-6">
                                     <div className="flex flex-col gap-6">

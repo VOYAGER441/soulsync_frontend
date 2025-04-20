@@ -1,11 +1,11 @@
 "use client";
 
+import { ModeToggle } from "@/components/ModeToggle";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/ModeToggle";
-import { Separator } from "@/components/ui/separator";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function TermsPage() {
     return (
@@ -16,7 +16,7 @@ export default function TermsPage() {
                     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
                         <div className="container flex h-14 items-center justify-between">
                             <div className="flex items-center gap-2" >
-                                <SidebarTrigger />
+                                {/* <SidebarTrigger />   */}
                                 <Image src="/assets/logo1.webp" alt="SoulSync Logo" width={40} height={40} />
                                 <span className="text-xl font-bold">SoulSync</span>
                             </div>
@@ -30,7 +30,7 @@ export default function TermsPage() {
                     </header>
 
                     {/* Main Content */}
-                    <main className="container py-12 max-w-4xl mx-auto">
+                    <main className="container py-12  mx-auto">
                         <h1 className="text-3xl font-bold mb-8">Terms and Conditions</h1>
                         <p className="text-muted-foreground mb-6">Last updated: April 20, 2025</p>
 

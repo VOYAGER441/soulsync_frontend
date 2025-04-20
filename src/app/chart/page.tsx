@@ -5,6 +5,7 @@ import utils from "@/utils";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import Image from "next/image";
+import { ModeToggle } from "@/components/ModeToggle";
 
 function ChartPage() {
     const searchParams = useSearchParams();
@@ -19,9 +20,10 @@ function ChartPage() {
                 <div className="bg-card text-card-foreground rounded-xl border shadow-lg p-3 sm:p-6 space-y-4 sm:space-y-6">
                     <div className="flex flex-col sm:flex-row items-center gap-4 sm:justify-between">
                         <h1 className="text-2xl sm:text-3xl font-bold">Sentiment Analysis</h1>
-                        <div className="flex items-center gap-2" onClick={() => window.location.href = "/dashboard"}>
-                            <Image src="/assets/logo1.webp" alt="logo" width={32} height={32} className="sm:w-[40px] sm:h-[40px]" />
+                        <div className="flex items-center gap-2">
+                            <Image src="/assets/logo1.webp" alt="logo" width={32} height={32} className="sm:w-[40px] sm:h-[40px]" onClick={() => window.location.href = "/dashboard"}/>
                             <span className="text-base sm:text-lg font-bold">SoulSync</span>
+                        <ModeToggle />
                         </div>
                     </div>
                     <div className="bg-black/5 dark:bg-white/5 rounded-lg p-2 sm:p-4">

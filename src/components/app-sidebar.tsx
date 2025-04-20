@@ -27,7 +27,7 @@ const data = {
   navSecondary: [
     {
       title: "Upgrade plan More access to the best models",
-      url: "#",
+      url: "/upgrade",
       icon: Gem,
     },
   ],

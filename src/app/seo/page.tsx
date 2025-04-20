@@ -1,13 +1,13 @@
 "use client"
 
 import { AppSidebar } from "@/components/sidebar"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import { SidebarInset } from "@/components/ui/sidebar"
 import { useState } from "react"
 import AboutPage from "../about/page"
-import PrivacyPage from "../privacy/page"
-import TermsPage from "../terms/page"
 import ContactPage from "../contact/page"
 import Home from "../page"
+import PrivacyPage from "../privacy/page"
+import TermsPage from "../terms/page"
 import UpgradePage from "../upgrade/page"
 
 
@@ -37,22 +37,25 @@ export default function SEO() {
     }
 
     return (
-        <div className="h-screen flex flex-col">
-            <SidebarProvider>
-                <AppSidebar
+        
 
-                    onNavigate={(path: string) => {
-                        const page = path.replace("/", "")
-                        setSelectedPage(page)
-                    }}
-                />
-                <SidebarInset className="h-screen flex-1 overflow-hidden">
+            <div className="h-screen flex flex-col">
+                
+                    <AppSidebar
 
-                    <main className="h-screen overflow-auto">
-                        {renderContent()}
-                    </main>
-                </SidebarInset>
-            </SidebarProvider>
-        </div>
+                        onNavigate={(path: string) => {
+                            const page = path.replace("/", "")
+                            setSelectedPage(page)
+                        }}
+                    />
+                    <SidebarInset className="h-screen flex-1 overflow-hidden">
+
+                        <main className="h-screen overflow-auto">
+                            {renderContent()}
+                        </main>
+                    </SidebarInset>
+                
+            </div>
+        
     )
 }

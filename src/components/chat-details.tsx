@@ -118,7 +118,9 @@ export function ChatDetails({ chatId, userId }: ChatDetailsProps) {
         </div>
 
 
-
+        <div className="flex justify-center">
+          <span className="text-center text-muted-foreground text-xs">SoulSync can make mistakes. Check important info.</span>
+        </div>
 
 
       </div>

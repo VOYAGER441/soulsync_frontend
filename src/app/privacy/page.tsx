@@ -3,7 +3,7 @@
 import { ModeToggle } from "@/components/ModeToggle";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,7 +16,7 @@ export default function PrivacyPage() {
           <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
             <div className="container flex h-14 items-center justify-between">
               <div className="flex items-center gap-2">
-                {/* <SidebarTrigger /> */}
+                <SidebarTrigger />
                 <Image src="/assets/logo1.webp" alt="SoulSync Logo" width={40} height={40} />
                 <span className="text-xl font-bold">SoulSync</span>
               </div>

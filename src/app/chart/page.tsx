@@ -21,13 +21,16 @@ function ChartPage() {
                     <div className="flex flex-col sm:flex-row items-center gap-4 sm:justify-between">
                         <h1 className="text-2xl sm:text-3xl font-bold">Sentiment Analysis</h1>
                         <div className="flex items-center gap-2">
-                            <Image src="/assets/logo1.webp" alt="logo" width={32} height={32} className="sm:w-[40px] sm:h-[40px]" onClick={() => window.location.href = "/dashboard"}/>
+                            <Image src="/assets/logo1.webp" alt="logo" width={32} height={32} className="sm:w-[40px] sm:h-[40px]" onClick={() => window.location.href = "/dashboard"} />
                             <span className="text-base sm:text-lg font-bold">SoulSync</span>
-                        <ModeToggle />
+                            <ModeToggle />
                         </div>
                     </div>
                     <div className="bg-black/5 dark:bg-white/5 rounded-lg p-2 sm:p-4">
                         <Chart userId={decodedUserId} />
+                    </div>
+                    <div className="flex justify-center">
+                        <span className="text-center text-muted-foreground text-xs">SoulSync can make mistakes. Check important info.</span>
                     </div>
                 </div>
             </div>

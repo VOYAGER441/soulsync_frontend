@@ -16,7 +16,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 // });
 
 export const metadata: Metadata = {
-  title: "SoulSync",
+  title: "SoulSync AI",
   description: "An AI chatbot that can help you with your mental health",
 };
 

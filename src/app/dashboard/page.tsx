@@ -1,16 +1,7 @@
 'use client';
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Suspense } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import ChatInterface from "@/components/chat-interface";
-import { ThemeSwitch } from "@/components/ui/switch";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { ModeToggle } from "@/components/ModeToggle";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,17 +13,25 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import Image from "next/image";
-import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
-import { Loader } from "lucide-react";
-import service from "@/service";
+import { Separator } from "@/components/ui/separator";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import * as Interface from "@/interface/soul.interface";
+import service from "@/service";
+import { Loader } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
 
 export default function Page() {
@@ -127,9 +126,10 @@ if (!userId) return null;
 
           <nav className="flex items-center ">
             <div className="flex items-center gap-x-2 text-black text-xs dark:text-white">
-              <span>Light</span>
+              {/* <span>Light</span>
               <ThemeSwitch />
-              <span>Dark</span>
+              <span>Dark</span> */}
+              <ModeToggle />
             </div>
           </nav>
 

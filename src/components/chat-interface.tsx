@@ -171,7 +171,7 @@ export default function ChatPageContent({ userId }: { userId: string }) {
               </div>
 
               {message.sender === "user" && (
-                <Avatar className="h-8 w-8">
+                <Avatar className="h-8 w-8 m-1">
                   {avatarUrl && <Image src={avatarUrl} alt="User" width={32} height={32} />}
                 </Avatar>
               )}

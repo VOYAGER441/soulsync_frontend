@@ -44,6 +44,12 @@ export function AppSidebar({ isLoading = false, onNavigate }: SidebarProps) {
             isActive: pathname === "/about",
         },
         {
+            title: "Upgrade to Pro",
+            href: "/upgrade",
+            isActive: pathname === "/upgrade",
+
+        },
+        {
             title: "Contact Us",
             href: "/contact",
             isActive: pathname === "/contact",

@@ -8,6 +8,8 @@ import PrivacyPage from "../privacy/page"
 import TermsPage from "../terms/page"
 import ContactPage from "../contact/page"
 import Home from "../page"
+import UpgradePage from "../upgrade/page"
+
 
 export default function SEO() {
 
@@ -21,6 +23,8 @@ export default function SEO() {
                 return <Home />
             case "about":
                 return <AboutPage />
+            case "upgrade":
+                return <UpgradePage />
             case "contact":
                 return <ContactPage />
             case "privacy":

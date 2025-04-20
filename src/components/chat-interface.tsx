@@ -49,6 +49,18 @@ export default function ChatPageContent({ userId }: { userId: string }) {
         const aiResponse = await service.chatService.chatWithAIModel(userId, pendingMessage);
         const fullText = aiResponse.reply;
 
+        // Add the sentiment message first
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: uuidv4(),
+            content: "",
+            sender: "ai",
+            sentiment: aiResponse.sentiment[0].label,
+            sentimentScore: aiResponse.sentiment[0].score
+          }
+        ]);
+
         let i = 0;
         setAiTypingText("");
 
@@ -59,7 +71,7 @@ export default function ChatPageContent({ userId }: { userId: string }) {
           if (i >= fullText.length) {
             clearInterval(interval);
             setMessages((prev) => [
-              ...prev,
+              ...prev.slice(0, -1), // Remove the last message with empty content
               {
                 id: uuidv4(),
                 content: aiResponse.reply,
@@ -152,8 +164,6 @@ export default function ChatPageContent({ userId }: { userId: string }) {
                     >
                       {message.content}
                     </ReactMarkdown>
-
-
                   </>
                 ) : (
                   <p className="text-sm md:text-base">{message.content}</p>

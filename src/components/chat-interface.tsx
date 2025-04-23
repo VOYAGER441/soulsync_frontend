@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 import { SentimentChart } from "@/components/chart-radial-stacked";
 import { useSearchParams } from "next/navigation";
 import * as Interface from "@/interface/soul.interface";
+import BotLoader from "./BotLoader";
 
 const initialMessages = [
   { id: "1", content: "Hello! How can I assist you today?", sender: "ai", sentiment: "Neutral", sentimentScore: 0.5 }
@@ -47,6 +48,8 @@ export default function ChatPageContent({ userId }: { userId: string }) {
       setLoading(true);
       try {
         const aiResponse = await service.chatService.chatWithAIModel(userId, pendingMessage);
+        // console.log("AI Response:", aiResponse);
+        
         const fullText = aiResponse.reply;
 
         // Add the sentiment message first
@@ -195,13 +198,15 @@ export default function ChatPageContent({ userId }: { userId: string }) {
 
         {loading && (
           <div className="flex items-center space-x-2">
-            <Avatar className="h-8 w-8">
+            {/* <Avatar className="h-8 w-8">
               <Image src="/assets/logo1.webp" alt="AI" width={32} height={32} />
-            </Avatar>
-            <div className="bg-gray-800 rounded-xl p-3 flex items-center">
+            </Avatar> */}
+            {/* <div className="bg-gray-800 rounded-xl p-3 flex items-center">
               <span className="text-gray-500 italic">Thinking...</span>
               <div className="animate-spin border-t-2 border-gray-400 rounded-full h-4 w-4 ml-2"></div>
-            </div>
+            </div> */}
+            <BotLoader loading={loading} />
+
           </div>
         )}
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { ModeToggle } from "@/components/ModeToggle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -14,22 +13,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* Header */}
-          <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
-            <div className="container flex h-14 items-center justify-between">
-              <div className="flex items-center gap-2">
-                {/* <SidebarTrigger /> */}
-                {/* <Toggle/> */}
-                <Image src="/assets/logo1.webp" alt="SoulSync Logo" width={40} height={40} />
-                <span className="text-xl font-bold">SoulSync</span>
-              </div>
-              <div className="flex items-center gap-4">
-                <ModeToggle />
-                <Link href="/login">
-                  <Button>Get Started</Button>
-                </Link>
-              </div>
-            </div>
-          </header>
+          
 
           {/* Main Content */}
           <main className="container py-12">

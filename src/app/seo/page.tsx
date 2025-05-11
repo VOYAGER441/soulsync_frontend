@@ -1,19 +1,18 @@
 "use client"
 
+import { ModeToggle } from "@/components/ModeToggle"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { useIsMobile } from "@/hooks/use-mobile"
-import { useState } from "react"
+import { Menu } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import { useState } from "react"
 import AboutPage from "../about/page"
 import ContactPage from "../contact/page"
-import Home from "../page"
 import PrivacyPage from "../privacy/page"
 import TermsPage from "../terms/page"
 import UpgradePage from "../upgrade/page"
-import { Button } from "@/components/ui/button"
-import { Menu } from "lucide-react"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { ModeToggle } from "@/components/ModeToggle"
-import Link from "next/link"
 
 export default function SEO() {
     const [selectedPage, setSelectedPage] = useState<string>("about")
@@ -21,7 +20,7 @@ export default function SEO() {
     const isMobile = useIsMobile()
 
     const navItems = [
-        { title: "Home", path: "/" },
+
         { title: "About", path: "about" },
         { title: "Upgrade", path: "upgrade" },
         { title: "Contact", path: "contact" },
@@ -37,8 +36,6 @@ export default function SEO() {
 
     const renderContent = () => {
         switch (selectedPage) {
-            case "/":
-                return <Home />
             case "about":
                 return <AboutPage />
             case "upgrade":

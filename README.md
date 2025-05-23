@@ -1,36 +1,152 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+  <img src="./public/assets/logo1.webp" alt="SoulSync Logo" width="200" height="200"/>
 
-## Getting Started
+  # SoulSync AI
 
-First, run the development server:
+  A Next.js-powered mental health chatbot application providing AI-assisted emotional support and wellness tracking.
 
+  [![Deployment Status](https://img.shields.io/badge/deployment-live-brightgreen)](https://soulsyncai.netlify.app/)
+  [![Next.js](https://img.shields.io/badge/Next.js-15.2.2-black)](https://nextjs.org/)
+  [![React](https://img.shields.io/badge/React-19.0.0-blue)](https://reactjs.org/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-Latest-blue)](https://www.typescriptlang.org/)
+  [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-Latest-38B2AC)](https://tailwindcss.com/)
+</div>
+
+## ✨ Features
+
+- 🤖 Advanced AI-powered chat interface
+- 🎭 Real-time sentiment analysis
+- 📊 Mood tracking and visualization
+- 🌓 Dark/Light theme support
+- 🔐 Secure authentication (Email/Password & Google OAuth)
+- 📱 Fully responsive design
+- ♿ Accessible components through Radix UI
+
+## 🚀 Quick Start
+
+1. **Clone and Install**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd soulsync_frontend
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Set up Environment Variables**
+Create a `.env.local` file with:
+```env
+NEXT_PUBLIC_APPWRITE_API_ENDPOINT=
+NEXT_PUBLIC_APPWRITE_PROJECT_ID=
+NEXT_PUBLIC_APPWRITE_DB_ID=
+NEXT_PUBLIC_APPWRITE_USERS_COLLECTION_ID=
+NEXT_PUBLIC_SOULSYNC_BASE_URL=
+NEXT_PUBLIC_APPWRITE_REDIRECT_URL=
+NEXT_PUBLIC_APPWRITE_FAILURE_URL=
+NEXT_PUBLIC_OPENROUTER_API_KEY=
+NEXT_PUBLIC_HUGGINGFACE_API_KEY=
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Run Development Server**
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Framework**: Next.js 15.2.2
+- **Language**: TypeScript
+- **Styling**: TailwindCSS, SASS
+- **UI Components**: 
+  - Shadcn UI
+  - Radix UI
+  - Spline Design (3D elements)
+- **State Management**: React Hooks
+- **Backend Services**: Appwrite
+- **APIs**: 
+  - OpenRouter (AI model)
+  - HuggingFace (Sentiment analysis)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🏗️ Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/          # Next.js app router pages
+├── components/   # Reusable UI components
+├── hooks/        # Custom React hooks
+├── interface/    # TypeScript interfaces
+├── lib/          # Utility functions
+├── service/      # API services
+└── utils/        # Helper utilities
+```
 
-## Deploy on Vercel
+## 🔒 Security Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- OAuth 2.0 implementation
+- Secure token handling
+- Protected routes
+- Environment variable security
+- API key protection
+- User data encryption
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📊 Key Components
+
+1. **Chat System**
+   - Real-time AI interactions
+   - Message history storage
+   - Sentiment analysis integration
+   - Chat filtering and organization
+
+2. **Authentication**
+   - Multiple auth providers
+   - Session management
+   - Profile management
+
+3. **Analytics**
+   - Mood tracking
+   - Sentiment visualization
+   - Historical trends
+
+## 🧪 Running Tests
+
+```bash
+npm run test
+```
+
+## 📦 Build for Production
+
+```bash
+npm run build
+```
+
+## 🚀 Deployment
+
+The application is deployed on Netlify. Automated deployments are triggered on main branch updates.
+
+Live demo: [https://soulsyncai.netlify.app/](https://soulsyncai.netlify.app/)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [Next.js](https://nextjs.org/)
+- [Shadcn UI](https://ui.shadcn.com/)
+- [Appwrite](https://appwrite.io/)
+- [OpenRouter](https://openrouter.ai/)
+- [HuggingFace](https://huggingface.co/)
+
+---
+
+<div align="center">
+Made with ❤️ by the SoulSync Team
+</div>
